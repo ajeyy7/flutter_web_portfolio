@@ -68,65 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: size.height,
       padding: EdgeInsets.symmetric(horizontal: isDesktop ? 120 : 40),
-      child: isDesktop
-          ? Row(
-              children: [
-                Expanded(flex: 3, child: _buildHeroContent(isDesktop)),
-                const SizedBox(width: 80),
-                Expanded(flex: 2, child: _buildHeroImage()),
-              ],
-            )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildHeroImage(isMobile: true),
-                const SizedBox(height: 60),
-                _buildHeroContent(isDesktop),
-              ],
-            ),
-    );
-  }
-
-  Widget _buildHeroImage({bool isMobile = false}) {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 1400),
-      builder: (context, value, child) {
-        return Opacity(
-          opacity: value,
-          child: Transform.scale(scale: 0.8 + (0.2 * value), child: child),
-        );
-      },
-      child: Container(
-        width: isMobile ? 250 : double.infinity,
-        height: isMobile ? 250 : 500,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color.fromARGB(255, 152, 152, 152), Color.fromARGB(255, 76, 76, 76)],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color.fromARGB(255, 152, 152, 152).withValues(alpha: 0.3),
-              blurRadius: 60,
-              spreadRadius: 10,
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.all(4),
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: const Color(0xFF1a1a1a),
-            image: const DecorationImage(
-              image: AssetImage('assets/svgs/img.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ),
+      child: Row(children: [Expanded(child: _buildHeroContent(isDesktop))]),
     );
   }
 
@@ -183,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
                 height: 1.1,
-                letterSpacing: -2,
+                letterSpacing: 2,
               ),
             ),
           ),
