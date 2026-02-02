@@ -18,6 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   bool _showNavbar = false;
 
+  // Section keys for navigation
+  final GlobalKey _aboutKey = GlobalKey();
+  final GlobalKey _skillsKey = GlobalKey();
+  final GlobalKey _experienceKey = GlobalKey();
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() => _showNavbar = false);
       }
     });
+  }
+
+  void _scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
@@ -47,18 +65,29 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 _buildHeroSection(size, isDesktop),
-                AboutMeSection(isDesktop: isDesktop),
-                SkillsSection(isDesktop: isDesktop),
-                ExperienceSection(isDesktop: isDesktop),
-                ProjectsSection(isDesktop: isDesktop),
-                ContactMeSection(isDesktop: isDesktop),
+                AboutMeSection(key: _aboutKey, isDesktop: isDesktop),
+                SkillsSection(key: _skillsKey, isDesktop: isDesktop),
+                ExperienceSection(key: _experienceKey, isDesktop: isDesktop),
+                ProjectsSection(key: _projectsKey, isDesktop: isDesktop),
+                ContactMeSection(key: _contactKey, isDesktop: isDesktop),
               ],
             ),
           ),
 
           // Floating Navigation
           if (_showNavbar)
-            Positioned(top: 30, left: 0, right: 0, child: NavBar()),
+            Positioned(
+              top: 30,
+              left: 0,
+              right: 0,
+              child: NavBar(
+                onAboutTap: () => _scrollToSection(_aboutKey),
+                onSkillsTap: () => _scrollToSection(_skillsKey),
+                onExperienceTap: () => _scrollToSection(_experienceKey),
+                onProjectsTap: () => _scrollToSection(_projectsKey),
+                onContactTap: () => _scrollToSection(_contactKey),
+              ),
+            ),
         ],
       ),
     );
@@ -196,8 +225,16 @@ class _HomeScreenState extends State<HomeScreen> {
             spacing: 20,
             runSpacing: 20,
             children: [
-              _buildButton('View Projects', isPrimary: true),
-              _buildButton('Contact Me', isPrimary: false),
+              _buildButton(
+                'View Projects',
+                isPrimary: true,
+                onTap: () => _scrollToSection(_projectsKey),
+              ),
+              _buildButton(
+                'Contact Me',
+                isPrimary: false,
+                onTap: () => _scrollToSection(_contactKey),
+              ),
             ],
           ),
         ),
@@ -205,30 +242,37 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildButton(String text, {required bool isPrimary}) {
+  Widget _buildButton(
+    String text, {
+    required bool isPrimary,
+    VoidCallback? onTap,
+  }) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-        decoration: BoxDecoration(
-          gradient: isPrimary
-              ? const LinearGradient(
-                  colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
-                )
-              : null,
-          border: !isPrimary
-              ? Border.all(color: Colors.white30, width: 1.5)
-              : null,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isPrimary ? const Color(0xFF1a1a1a) : Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          decoration: BoxDecoration(
+            gradient: isPrimary
+                ? const LinearGradient(
+                    colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
+                  )
+                : null,
+            border: !isPrimary
+                ? Border.all(color: Colors.white30, width: 1.5)
+                : null,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: isPrimary ? const Color(0xFF1a1a1a) : Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
+            ),
           ),
         ),
       ),

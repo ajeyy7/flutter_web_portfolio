@@ -1,4 +1,5 @@
 import 'package:Portfolio_Ajay/data/skills.dart';
+import 'package:Portfolio_Ajay/shared/scroll_animation.dart';
 import 'package:flutter/material.dart';
 
 class SkillsSection extends StatelessWidget {
@@ -15,33 +16,41 @@ class SkillsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'EXPERTISE',
-            style: TextStyle(
-              fontSize: 14,
-              letterSpacing: 4,
-              color: Color(0xFF666666),
-              fontWeight: FontWeight.w600,
+          ScrollAnimatedItem(
+            child: const Text(
+              'EXPERTISE',
+              style: TextStyle(
+                fontSize: 14,
+                letterSpacing: 4,
+                color: Color(0xFF666666),
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Technical Skills',
-            style: TextStyle(
-              fontSize: 42,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              height: 1.2,
+          ScrollAnimatedItem(
+            delay: const Duration(milliseconds: 100),
+            child: const Text(
+              'Technical Skills',
+              style: TextStyle(
+                fontSize: 42,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                height: 1.2,
+              ),
             ),
           ),
           const SizedBox(height: 60),
-          ...skills.map(
-            (skill) => _buildSkillBar(
-              skill['name'] as String,
-              skill['level'] as double,
-              isDesktop,
-            ),
-          ),
+          ...skills.asMap().entries.map(
+                (entry) => ScrollAnimatedItem(
+                  delay: Duration(milliseconds: 200 + (entry.key * 100)),
+                  child: _buildSkillBar(
+                    entry.value['name'] as String,
+                    entry.value['level'] as double,
+                    isDesktop,
+                  ),
+                ),
+              ),
         ],
       ),
     );

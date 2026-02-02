@@ -1,4 +1,5 @@
 import 'package:Portfolio_Ajay/data/projects.dart';
+import 'package:Portfolio_Ajay/shared/scroll_animation.dart';
 import 'package:flutter/material.dart';
 
 class ProjectsSection extends StatelessWidget {
@@ -15,23 +16,28 @@ class ProjectsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'PORTFOLIO',
-            style: TextStyle(
-              fontSize: 14,
-              letterSpacing: 4,
-              color: Color(0xFF666666),
-              fontWeight: FontWeight.w600,
+          ScrollAnimatedItem(
+            child: const Text(
+              'PORTFOLIO',
+              style: TextStyle(
+                fontSize: 14,
+                letterSpacing: 4,
+                color: Color(0xFF666666),
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Featured Projects',
-            style: TextStyle(
-              fontSize: 42,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-              height: 1.2,
+          ScrollAnimatedItem(
+            delay: const Duration(milliseconds: 100),
+            child: const Text(
+              'Featured Projects',
+              style: TextStyle(
+                fontSize: 42,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+                height: 1.2,
+              ),
             ),
           ),
           const SizedBox(height: 60),
@@ -39,32 +45,38 @@ class ProjectsSection extends StatelessWidget {
             Wrap(
               spacing: 32,
               runSpacing: 32,
-              children: projects
+              children: projects.asMap().entries
                   .map(
-                    (project) => SizedBox(
-                      width: (MediaQuery.of(context).size.width - 304) / 3,
-                      child: _buildProjectCard(
-                        project['name'] as String,
-                        project['category'] as String,
-                        project['description'] as String,
-                        project['tech'] as List<String>,
+                    (entry) => ScrollAnimatedItem(
+                      delay: Duration(milliseconds: 200 + (entry.key * 150)),
+                      child: SizedBox(
+                        width: (MediaQuery.of(context).size.width - 304) / 3,
+                        child: _buildProjectCard(
+                          entry.value['name'] as String,
+                          entry.value['category'] as String,
+                          entry.value['description'] as String,
+                          entry.value['tech'] as List<String>,
+                        ),
                       ),
                     ),
                   )
                   .toList(),
             )
           else
-            ...projects.map(
-              (project) => Padding(
-                padding: const EdgeInsets.only(bottom: 32),
-                child: _buildProjectCard(
-                  project['name'] as String,
-                  project['category'] as String,
-                  project['description'] as String,
-                  project['tech'] as List<String>,
+            ...projects.asMap().entries.map(
+                  (entry) => ScrollAnimatedItem(
+                    delay: Duration(milliseconds: 200 + (entry.key * 150)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 32),
+                      child: _buildProjectCard(
+                        entry.value['name'] as String,
+                        entry.value['category'] as String,
+                        entry.value['description'] as String,
+                        entry.value['tech'] as List<String>,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
         ],
       ),
     );
