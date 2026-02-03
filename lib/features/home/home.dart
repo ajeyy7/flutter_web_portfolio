@@ -143,131 +143,85 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Greeting
-        TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: 1),
-          duration: const Duration(milliseconds: 800),
-          builder: (context, value, child) {
-            return Opacity(
-              opacity: value,
-              child: Transform.translate(
-                offset: Offset(0, 20 * (1 - value)),
-                child: child,
-              ),
-            );
-          },
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 2,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
-                  ),
+        Row(
+          children: [
+            Container(
+              width: 40,
+              height: 2,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
-                "HELLO, I'M",
-                style: TextStyle(
-                  fontSize: 13,
-                  letterSpacing: 3,
-                  color: Color(0xFF00D4FF),
-                  fontWeight: FontWeight.w700,
-                ),
+            ),
+            const SizedBox(width: 12),
+            const Text(
+              "HELLO, I'M",
+              style: TextStyle(
+                fontSize: 13,
+                letterSpacing: 3,
+                color: Color(0xFF00D4FF),
+                fontWeight: FontWeight.w700,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         const SizedBox(height: 24),
 
         // Name with gradient
-        TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: 1),
-          duration: const Duration(milliseconds: 1000),
-          builder: (context, value, child) {
-            return Opacity(
-              opacity: value,
-              child: Transform.translate(
-                offset: Offset(0, 30 * (1 - value)),
-                child: child,
-              ),
-            );
-          },
-          child: ShaderMask(
-            shaderCallback: (bounds) => LinearGradient(
-              colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
-            ).createShader(bounds),
-            child: Text(
-              'Ajaykrishna',
-              style: TextStyle(
-                fontSize: isDesktop ? 80 : 56,
-                fontWeight: FontWeight.w900,
-                color: Colors.white,
-                height: 1.1,
-                letterSpacing: -2,
-              ),
+        ShaderMask(
+          shaderCallback: (bounds) => LinearGradient(
+            colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
+          ).createShader(bounds),
+          child: Text(
+            'Ajaykrishna',
+            style: TextStyle(
+              fontSize: isDesktop ? 80 : 56,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              height: 1.1,
+              letterSpacing: -2,
             ),
           ),
         ),
         const SizedBox(height: 12),
 
         // Title/Role
-        TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: 1),
-          duration: const Duration(milliseconds: 1200),
-          builder: (context, value, child) {
-            return Opacity(
-              opacity: value,
-              child: Transform.translate(
-                offset: Offset(0, 30 * (1 - value)),
-                child: child,
-              ),
-            );
-          },
-          child: ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
-            ).createShader(bounds),
-            child: Text(
-              'Flutter Developer',
-              style: TextStyle(
-                fontSize: isDesktop ? 56 : 40,
-                fontWeight: FontWeight.w900,
-                color: Colors.white,
-                height: 1.1,
-                letterSpacing: -1.5,
-              ),
+        ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
+          ).createShader(bounds),
+          child: Text(
+            'Flutter Developer',
+            style: TextStyle(
+              fontSize: isDesktop ? 56 : 40,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              height: 1.1,
+              letterSpacing: -1.5,
             ),
           ),
         ),
         const SizedBox(height: 32),
 
         // CTA Buttons
-        TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: 1),
-          duration: const Duration(milliseconds: 1700),
-          builder: (context, value, child) {
-            return Opacity(opacity: value, child: child);
-          },
-          child: Wrap(
-            spacing: 20,
-            runSpacing: 20,
-            children: [
-              _buildButton(
-                'View Projects',
-                isPrimary: true,
-                icon: Icons.arrow_forward,
-                onTap: () => _scrollToSection(_projectsKey),
-              ),
-              _buildButton(
-                'Get in Touch',
-                isPrimary: false,
-                icon: Icons.mail_outline,
-                onTap: () => _scrollToSection(_contactKey),
-              ),
-            ],
-          ),
+        Wrap(
+          spacing: 20,
+          runSpacing: 20,
+          children: [
+            _buildButton(
+              'View Projects',
+              isPrimary: true,
+              icon: Icons.arrow_forward,
+              onTap: () => _scrollToSection(_projectsKey),
+            ),
+            _buildButton(
+              'Get in Touch',
+              isPrimary: false,
+              icon: Icons.mail_outline,
+              onTap: () => _scrollToSection(_contactKey),
+            ),
+          ],
         ),
       ],
     );

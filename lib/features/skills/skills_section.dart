@@ -1,5 +1,4 @@
 import 'package:Portfolio_Ajay/core/constants/constants.dart';
-import 'package:Portfolio_Ajay/shared/scroll_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -18,49 +17,44 @@ class SkillsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Section Label with accent
-          ScrollAnimatedItem(
-            child: Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 2,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
-                    ),
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 2,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
                   ),
                 ),
-                const SizedBox(width: 12),
-                const Text(
-                  'EXPERTISE',
-                  style: TextStyle(
-                    fontSize: 13,
-                    letterSpacing: 3,
-                    color: Color(0xFF00D4FF),
-                    fontWeight: FontWeight.w700,
-                  ),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'EXPERTISE',
+                style: TextStyle(
+                  fontSize: 13,
+                  letterSpacing: 3,
+                  color: Color(0xFF00D4FF),
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           const SizedBox(height: 24),
 
           // Main Title with gradient
-          ScrollAnimatedItem(
-            delay: const Duration(milliseconds: 100),
-            child: ShaderMask(
-              shaderCallback: (bounds) => LinearGradient(
-                colors: [Colors.white, Colors.white.withValues(alpha:0.8)],
-              ).createShader(bounds),
-              child: const Text(
-                'Skills & Technologies',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white,
-                  height: 1.2,
-                  letterSpacing: -1,
-                ),
+          ShaderMask(
+            shaderCallback: (bounds) => LinearGradient(
+              colors: [Colors.white, Colors.white.withValues(alpha:0.8)],
+            ).createShader(bounds),
+            child: const Text(
+              'Skills & Technologies',
+              style: TextStyle(
+                fontSize: 48,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+                height: 1.2,
+                letterSpacing: -1,
               ),
             ),
           ),
@@ -68,21 +62,18 @@ class SkillsSection extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Subtitle
-          ScrollAnimatedItem(
-            delay: const Duration(milliseconds: 150),
-            child: Text(
-              'Tools and technologies I work with to bring ideas to life',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade400,
-                height: 1.6,
-              ),
+          Text(
+            'Tools and technologies I work with to bring ideas to life',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey.shade400,
+              height: 1.6,
             ),
           ),
 
           const SizedBox(height: 80),
 
-          // Skills Grid with staggered animation
+          // Skills Grid
           _buildSkillsGrid(),
         ],
       ),
@@ -111,14 +102,11 @@ class SkillsSection extends StatelessWidget {
       runSpacing: isDesktop ? 24 : 16,
       children: List.generate(
         skills.length,
-        (index) => ScrollAnimatedItem(
-          delay: Duration(milliseconds: 200 + (index * 50)),
-          child: SkillIcon(
-            svg: skills[index]['svg'] as String,
-            name: skills[index]['name'] as String,
-            accentColor: skills[index]['color'] as Color,
-            isDesktop: isDesktop,
-          ),
+        (index) => SkillIcon(
+          svg: skills[index]['svg'] as String,
+          name: skills[index]['name'] as String,
+          accentColor: skills[index]['color'] as Color,
+          isDesktop: isDesktop,
         ),
       ),
     );
@@ -143,138 +131,88 @@ class SkillIcon extends StatefulWidget {
   State<SkillIcon> createState() => _SkillIconState();
 }
 
-class _SkillIconState extends State<SkillIcon>
-    with SingleTickerProviderStateMixin {
+class _SkillIconState extends State<SkillIcon> {
   bool _isHovered = false;
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _rotateAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.1,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
-
-    _rotateAnimation = Tween<double>(
-      begin: 0.0,
-      end: 0.05,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final size = widget.isDesktop ? 110.0 : 85.0;
 
     return MouseRegion(
-      onEnter: (_) {
-        setState(() => _isHovered = true);
-        _controller.forward();
-      },
-      onExit: (_) {
-        setState(() => _isHovered = false);
-        _controller.reverse();
-      },
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _scaleAnimation.value,
-            child: Transform.rotate(
-              angle: _rotateAnimation.value,
-              child: Container(
-                height: size,
-                width: size,
-                decoration: BoxDecoration(
-                  gradient: _isHovered
-                      ? LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            widget.accentColor.withValues(alpha:0.1),
-                            widget.accentColor.withValues(alpha:0.05),
-                          ],
-                        )
-                      : null,
-                  color: _isHovered ? null : Color(0xFF1A1A1A),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: _isHovered
-                        ? widget.accentColor.withValues(alpha:0.6)
-                        : Colors.grey.shade800,
-                    width: 2,
-                  ),
-                  boxShadow: _isHovered
-                      ? [
-                          BoxShadow(
-                            color: widget.accentColor.withValues(alpha:0.3),
-                            blurRadius: 20,
-                            spreadRadius: 0,
-                            offset: Offset(0, 8),
-                          ),
-                        ]
-                      : [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha:0.2),
-                            blurRadius: 10,
-                            spreadRadius: 0,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: size * 0.45,
-                      width: size * 0.45,
-                      child: SvgPicture.asset(
-                        widget.svg,
-                        colorFilter: _isHovered
-                            ? ColorFilter.mode(
-                                widget.accentColor,
-                                BlendMode.srcIn,
-                              )
-                            : null,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    AnimatedOpacity(
-                      opacity: _isHovered ? 1.0 : 0.7,
-                      duration: Duration(milliseconds: 200),
-                      child: Text(
-                        widget.name,
-                        style: TextStyle(
-                          fontSize: widget.isDesktop ? 12 : 10,
-                          fontWeight: _isHovered
-                              ? FontWeight.w700
-                              : FontWeight.w600,
-                          color: _isHovered
-                              ? widget.accentColor
-                              : Colors.white70,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ),
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Container(
+        height: size,
+        width: size,
+        decoration: BoxDecoration(
+          gradient: _isHovered
+              ? LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    widget.accentColor.withValues(alpha:0.1),
+                    widget.accentColor.withValues(alpha:0.05),
                   ],
-                ),
+                )
+              : null,
+          color: _isHovered ? null : Color(0xFF1A1A1A),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: _isHovered
+                ? widget.accentColor.withValues(alpha:0.6)
+                : Colors.grey.shade800,
+            width: 2,
+          ),
+          boxShadow: _isHovered
+              ? [
+                  BoxShadow(
+                    color: widget.accentColor.withValues(alpha:0.3),
+                    blurRadius: 20,
+                    spreadRadius: 0,
+                    offset: Offset(0, 8),
+                  ),
+                ]
+              : [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha:0.2),
+                    blurRadius: 10,
+                    spreadRadius: 0,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: size * 0.45,
+              width: size * 0.45,
+              child: SvgPicture.asset(
+                widget.svg,
+                colorFilter: _isHovered
+                    ? ColorFilter.mode(
+                        widget.accentColor,
+                        BlendMode.srcIn,
+                      )
+                    : null,
               ),
             ),
-          );
-        },
+            SizedBox(height: 8),
+            Text(
+              widget.name,
+              style: TextStyle(
+                fontSize: widget.isDesktop ? 12 : 10,
+                fontWeight: _isHovered
+                    ? FontWeight.w700
+                    : FontWeight.w600,
+                color: _isHovered
+                    ? widget.accentColor
+                    : Colors.white70,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

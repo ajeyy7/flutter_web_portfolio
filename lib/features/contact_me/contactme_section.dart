@@ -1,4 +1,3 @@
-import 'package:Portfolio_Ajay/shared/scroll_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -61,81 +60,73 @@ class ContactMeSection extends StatelessWidget {
       child: Column(
         children: [
           // Section Label with accent
-          ScrollAnimatedItem(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 40,
-                  height: 2,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
-                    ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 40,
+                height: 2,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
                   ),
                 ),
-                const SizedBox(width: 12),
-                const Text(
-                  'GET IN TOUCH',
-                  style: TextStyle(
-                    fontSize: 13,
-                    letterSpacing: 3,
-                    color: Color(0xFF00D4FF),
-                    fontWeight: FontWeight.w700,
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'GET IN TOUCH',
+                style: TextStyle(
+                  fontSize: 13,
+                  letterSpacing: 3,
+                  color: Color(0xFF00D4FF),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Container(
+                width: 40,
+                height: 2,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF0099FF), Color(0xFF00D4FF)],
                   ),
                 ),
-                const SizedBox(width: 12),
-                Container(
-                  width: 40,
-                  height: 2,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF0099FF), Color(0xFF00D4FF)],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           const SizedBox(height: 32),
 
           // Main Title
-          ScrollAnimatedItem(
-            delay: const Duration(milliseconds: 100),
-            child: ShaderMask(
-              shaderCallback: (bounds) => LinearGradient(
-                colors: [Colors.white, Colors.white.withValues(alpha:0.8)],
-              ).createShader(bounds),
-              child: Text(
-                "Let's Work Together",
-                style: TextStyle(
-                  fontSize: isDesktop ? 56 : 40,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  height: 1.2,
-                  letterSpacing: -1.5,
-                ),
-                textAlign: TextAlign.center,
+          ShaderMask(
+            shaderCallback: (bounds) => LinearGradient(
+              colors: [Colors.white, Colors.white.withValues(alpha:0.8)],
+            ).createShader(bounds),
+            child: Text(
+              "Let's Work Together",
+              style: TextStyle(
+                fontSize: isDesktop ? 56 : 40,
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
+                height: 1.2,
+                letterSpacing: -1.5,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
 
           const SizedBox(height: 20),
 
           // Subtitle
-          ScrollAnimatedItem(
-            delay: const Duration(milliseconds: 150),
-            child: Container(
-              constraints: BoxConstraints(maxWidth: 600),
-              child: Text(
-                'Have a project in mind? Let\'s create something amazing together.',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey.shade400,
-                  height: 1.6,
-                ),
-                textAlign: TextAlign.center,
+          Container(
+            constraints: BoxConstraints(maxWidth: 600),
+            child: Text(
+              'Have a project in mind? Let\'s create something amazing together.',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade400,
+                height: 1.6,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
 
@@ -143,64 +134,11 @@ class ContactMeSection extends StatelessWidget {
 
           // Contact Cards
           if (isDesktop)
-            ScrollAnimatedItem(
-              delay: const Duration(milliseconds: 200),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: ContactCard(
-                      icon: Icons.email_outlined,
-                      label: 'Email',
-                      value: 'ajaykrishna9872@gmail.com',
-                      accentColor: Color(0xFF00D9FF),
-                      onTap: _launchEmail,
-                      onCopy: () => _copyToClipboard(
-                        context,
-                        'ajaykrishna9872@gmail.com',
-                        'Email',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 32),
-                  Flexible(
-                    child: ContactCard(
-                      icon: Icons.phone_outlined,
-                      label: 'Phone',
-                      value: '+91 984 657 2149',
-                      accentColor: Color(0xFF00FFA3),
-                      onTap: _launchPhone,
-                      onCopy: () => _copyToClipboard(
-                        context,
-                        '+91 984 657 2149',
-                        'Phone',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 32),
-                  Flexible(
-                    child: ContactCard(
-                      icon: Icons.location_on_outlined,
-                      label: 'Location',
-                      value: 'Kerala, India',
-                      accentColor: Color(0xFFFF6B35),
-                      onTap: null,
-                      onCopy: () => _copyToClipboard(
-                        context,
-                        'Kerala, India',
-                        'Location',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          else
-            ScrollAnimatedItem(
-              delay: const Duration(milliseconds: 200),
-              child: Column(
-                children: [
-                  ContactCard(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: ContactCard(
                     icon: Icons.email_outlined,
                     label: 'Email',
                     value: 'ajaykrishna9872@gmail.com',
@@ -212,104 +150,145 @@ class ContactMeSection extends StatelessWidget {
                       'Email',
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  ContactCard(
+                ),
+                const SizedBox(width: 32),
+                Flexible(
+                  child: ContactCard(
                     icon: Icons.phone_outlined,
                     label: 'Phone',
                     value: '+91 984 657 2149',
                     accentColor: Color(0xFF00FFA3),
                     onTap: _launchPhone,
-                    onCopy: () =>
-                        _copyToClipboard(context, '+91 984 657 2149', 'Phone'),
+                    onCopy: () => _copyToClipboard(
+                      context,
+                      '+91 984 657 2149',
+                      'Phone',
+                    ),
                   ),
-                  const SizedBox(height: 24),
-                  ContactCard(
+                ),
+                const SizedBox(width: 32),
+                Flexible(
+                  child: ContactCard(
                     icon: Icons.location_on_outlined,
                     label: 'Location',
                     value: 'Kerala, India',
                     accentColor: Color(0xFFFF6B35),
                     onTap: null,
-                    onCopy: () =>
-                        _copyToClipboard(context, 'Kerala, India', 'Location'),
+                    onCopy: () => _copyToClipboard(
+                      context,
+                      'Kerala, India',
+                      'Location',
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            )
+          else
+            Column(
+              children: [
+                ContactCard(
+                  icon: Icons.email_outlined,
+                  label: 'Email',
+                  value: 'ajaykrishna9872@gmail.com',
+                  accentColor: Color(0xFF00D9FF),
+                  onTap: _launchEmail,
+                  onCopy: () => _copyToClipboard(
+                    context,
+                    'ajaykrishna9872@gmail.com',
+                    'Email',
+                  ),
+                ),
+                const SizedBox(height: 24),
+                ContactCard(
+                  icon: Icons.phone_outlined,
+                  label: 'Phone',
+                  value: '+91 984 657 2149',
+                  accentColor: Color(0xFF00FFA3),
+                  onTap: _launchPhone,
+                  onCopy: () =>
+                      _copyToClipboard(context, '+91 984 657 2149', 'Phone'),
+                ),
+                const SizedBox(height: 24),
+                ContactCard(
+                  icon: Icons.location_on_outlined,
+                  label: 'Location',
+                  value: 'Kerala, India',
+                  accentColor: Color(0xFFFF6B35),
+                  onTap: null,
+                  onCopy: () =>
+                      _copyToClipboard(context, 'Kerala, India', 'Location'),
+                ),
+              ],
             ),
 
           const SizedBox(height: 80),
 
           // Social Links
-          ScrollAnimatedItem(
-            delay: const Duration(milliseconds: 300),
-            child: Column(
-              children: [
-                Text(
-                  'CONNECT WITH ME',
-                  style: TextStyle(
-                    fontSize: 11,
-                    letterSpacing: 2,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w700,
+          Column(
+            children: [
+              Text(
+                'CONNECT WITH ME',
+                style: TextStyle(
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  color: Colors.grey.shade600,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SocialButton(
+                    icon: Icons.code,
+                    label: 'GitHub',
+                    color: Color(0xFFFFFFFF),
+                    onTap: _launchGitHub,
                   ),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocialButton(
-                      icon: Icons.code,
-                      label: 'GitHub',
-                      color: Color(0xFFFFFFFF),
-                      onTap: _launchGitHub,
-                    ),
-                    const SizedBox(width: 20),
-                    SocialButton(
-                      icon: Icons.business_center,
-                      label: 'LinkedIn',
-                      color: Color(0xFF0077B5),
-                      onTap: _launchLinkedIn,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  const SizedBox(width: 20),
+                  SocialButton(
+                    icon: Icons.business_center,
+                    label: 'LinkedIn',
+                    color: Color(0xFF0077B5),
+                    onTap: _launchLinkedIn,
+                  ),
+                ],
+              ),
+            ],
           ),
 
           const SizedBox(height: 80),
 
           // Footer
-          ScrollAnimatedItem(
-            delay: const Duration(milliseconds: 400),
-            child: Column(
-              children: [
-                Container(
-                  width: 60,
-                  height: 2,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xFF00D9FF).withValues(alpha:0.5),
-                        Colors.transparent,
-                      ],
-                    ),
+          Column(
+            children: [
+              Container(
+                width: 60,
+                height: 2,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF00D9FF).withValues(alpha:0.5),
+                      Colors.transparent,
+                    ],
                   ),
                 ),
-                const SizedBox(height: 24),
-                Text(
-                  '© 2026 AjayKrishna. Built with Flutter 💙',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF666666),
-                    letterSpacing: 0.5,
-                  ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                '© 2026 AjayKrishna. Built with Flutter 💙',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF666666),
+                  letterSpacing: 0.5,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'All rights reserved.',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF444444)),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'All rights reserved.',
+                style: TextStyle(fontSize: 12, color: Color(0xFF444444)),
+              ),
+            ],
           ),
         ],
       ),
@@ -317,8 +296,8 @@ class ContactMeSection extends StatelessWidget {
   }
 }
 
-// Contact Card Widget
-class ContactCard extends StatefulWidget {
+// Contact Card Widget - NO ANIMATIONS
+class ContactCard extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
@@ -337,196 +316,125 @@ class ContactCard extends StatefulWidget {
   });
 
   @override
-  State<ContactCard> createState() => _ContactCardState();
-}
-
-class _ContactCardState extends State<ContactCard>
-    with SingleTickerProviderStateMixin {
-  bool _isHovered = false;
-  late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 200),
-      vsync: this,
-    );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.05,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: widget.onTap != null
-          ? SystemMouseCursors.click
-          : SystemMouseCursors.basic,
-      onEnter: (_) {
-        setState(() => _isHovered = true);
-        _controller.forward();
-      },
-      onExit: (_) {
-        setState(() => _isHovered = false);
-        _controller.reverse();
-      },
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: _scaleAnimation.value,
-              child: Container(
-                padding: const EdgeInsets.all(32),
-                decoration: BoxDecoration(
-                  gradient: _isHovered
-                      ? LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFF1A1A1A),
-                            widget.accentColor.withValues(alpha:0.05),
-                          ],
-                        )
-                      : null,
-                  color: _isHovered ? null : Color(0xFF1A1A1A),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: _isHovered
-                        ? widget.accentColor.withValues(alpha:0.5)
-                        : Color(0xFF2a2a2a),
-                    width: 2,
-                  ),
-                  boxShadow: _isHovered
-                      ? [
-                          BoxShadow(
-                            color: widget.accentColor.withValues(alpha:0.2),
-                            blurRadius: 24,
-                            spreadRadius: 0,
-                            offset: Offset(0, 8),
-                          ),
-                        ]
-                      : [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha:0.2),
-                            blurRadius: 12,
-                            spreadRadius: 0,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(32),
+        decoration: BoxDecoration(
+          color: Color(0xFF1A1A1A),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: Color(0xFF2a2a2a),
+            width: 2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha:0.2),
+              blurRadius: 12,
+              spreadRadius: 0,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            // Icon
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    accentColor.withValues(alpha:0.2),
+                    accentColor.withValues(alpha:0.1),
+                  ],
                 ),
-                child: Column(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: accentColor.withValues(alpha:0.3),
+                  width: 1.5,
+                ),
+              ),
+              child: Icon(
+                icon,
+                color: accentColor,
+                size: 28,
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Label
+            Text(
+              label.toUpperCase(),
+              style: TextStyle(
+                fontSize: 11,
+                letterSpacing: 2,
+                color: accentColor.withValues(alpha:0.8),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            // Value
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.3,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+
+            // Copy Button
+            GestureDetector(
+              onTap: onCopy,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: accentColor.withValues(alpha:0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: accentColor.withValues(alpha:0.3),
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Icon
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            widget.accentColor.withValues(alpha:0.2),
-                            widget.accentColor.withValues(alpha:0.1),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: widget.accentColor.withValues(alpha:0.3),
-                          width: 1.5,
-                        ),
-                      ),
-                      child: Icon(
-                        widget.icon,
-                        color: widget.accentColor,
-                        size: 28,
-                      ),
+                    Icon(
+                      Icons.content_copy,
+                      size: 14,
+                      color: accentColor,
                     ),
-                    const SizedBox(height: 20),
-
-                    // Label
+                    const SizedBox(width: 6),
                     Text(
-                      widget.label.toUpperCase(),
+                      'Copy',
                       style: TextStyle(
-                        fontSize: 11,
-                        letterSpacing: 2,
-                        color: widget.accentColor.withValues(alpha:0.8),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Value
-                    Text(
-                      widget.value,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
+                        fontSize: 12,
+                        color: accentColor,
                         fontWeight: FontWeight.w600,
-                        letterSpacing: 0.3,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Copy Button
-                    GestureDetector(
-                      onTap: widget.onCopy,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: widget.accentColor.withValues(alpha:0.1),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: widget.accentColor.withValues(alpha:0.3),
-                            width: 1,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.content_copy,
-                              size: 14,
-                              color: widget.accentColor,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              'Copy',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: widget.accentColor,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-// Social Button Widget
-class SocialButton extends StatefulWidget {
+// Social Button Widget - NO ANIMATIONS
+class SocialButton extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color color;
@@ -541,55 +449,38 @@ class SocialButton extends StatefulWidget {
   });
 
   @override
-  State<SocialButton> createState() => _SocialButtonState();
-}
-
-class _SocialButtonState extends State<SocialButton> {
-  bool _isHovered = false;
-
-  @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          decoration: BoxDecoration(
-            color: _isHovered
-                ? widget.color.withValues(alpha:0.1)
-                : Color(0xFF1A1A1A),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: _isHovered
-                  ? widget.color.withValues(alpha:0.5)
-                  : Color(0xFF2a2a2a),
-              width: 2,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(
+          color: Color(0xFF1A1A1A),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Color(0xFF2a2a2a),
+            width: 2,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: Colors.grey.shade600,
+              size: 20,
             ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                widget.icon,
-                color: _isHovered ? widget.color : Colors.grey.shade600,
-                size: 20,
+            const SizedBox(width: 10),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey.shade400,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5,
               ),
-              const SizedBox(width: 10),
-              Text(
-                widget.label,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: _isHovered ? widget.color : Colors.grey.shade400,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.5,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
