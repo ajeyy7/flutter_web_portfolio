@@ -24,10 +24,7 @@ class AboutMeSection extends StatelessWidget {
                   height: 2,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        Color(0xFF00D4FF),
-                        Color(0xFF0099FF),
-                      ],
+                      colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
                     ),
                   ),
                 ),
@@ -51,13 +48,10 @@ class AboutMeSection extends StatelessWidget {
             delay: const Duration(milliseconds: 100),
             child: ShaderMask(
               shaderCallback: (bounds) => LinearGradient(
-                colors: [
-                  Colors.white,
-                  Colors.white.withValues(alpha:0.8),
-                ],
+                colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
               ).createShader(bounds),
               child: Text(
-                isDesktop 
+                isDesktop
                     ? 'Building Digital Experiences\nAcross Platforms'
                     : 'Building Digital\nExperiences',
                 style: TextStyle(
@@ -71,23 +65,6 @@ class AboutMeSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
-
-          // Subtitle/Intro
-          ScrollAnimatedItem(
-            delay: const Duration(milliseconds: 150),
-            child: Text(
-              'Hi, I\'m AjayKrishna — a Flutter developer specializing in Mobile, Web, and Desktop applications',
-              style: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF00D9FF),
-                height: 1.6,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.3,
-              ),
-            ),
-          ),
-
           SizedBox(height: isDesktop ? 60 : 40),
 
           // Main Content - Two Column Layout on Desktop
@@ -95,13 +72,9 @@ class AboutMeSection extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: _buildContentColumn(),
-                ),
+                Expanded(child: _buildContentColumn()),
                 const SizedBox(width: 80),
-                Expanded(
-                  child: _buildStatsAndHighlights(),
-                ),
+                Expanded(child: _buildStatsAndHighlights()),
               ],
             )
           else
@@ -145,10 +118,7 @@ class AboutMeSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: Color(0xFF1A1A1A),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: Color(0xFF2a2a2a),
-                width: 2,
-              ),
+              border: Border.all(color: Color(0xFF2a2a2a), width: 2),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,8 +130,8 @@ class AboutMeSection extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xFF00D9FF).withValues(alpha:0.2),
-                            Color(0xFF00FFA3).withValues(alpha:0.2),
+                            Color(0xFF00D9FF).withValues(alpha: 0.2),
+                            Color(0xFF00FFA3).withValues(alpha: 0.2),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(8),
@@ -204,13 +174,13 @@ class AboutMeSection extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFF00D9FF).withValues(alpha:0.1),
-                  Color(0xFF00FFA3).withValues(alpha:0.1),
+                  Color(0xFF00D9FF).withValues(alpha: 0.1),
+                  Color(0xFF00FFA3).withValues(alpha: 0.1),
                 ],
               ),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: Color(0xFF00D9FF).withValues(alpha:0.3),
+                color: Color(0xFF00D9FF).withValues(alpha: 0.3),
                 width: 2,
               ),
             ),
@@ -258,44 +228,6 @@ class AboutMeSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Stats Grid
-        ScrollAnimatedItem(
-          delay: const Duration(milliseconds: 350),
-          child: Container(
-            padding: const EdgeInsets.all(32),
-            decoration: BoxDecoration(
-              color: Color(0xFF1A1A1A),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Color(0xFF2a2a2a),
-                width: 2,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'BY THE NUMBERS',
-                  style: TextStyle(
-                    fontSize: 11,
-                    letterSpacing: 2,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                _buildStat('2+', 'Years Experience', Color(0xFF00D9FF)),
-                const SizedBox(height: 32),
-                _buildStat('15+', 'Projects Delivered', Color(0xFF00FFA3)),
-                const SizedBox(height: 32),
-                _buildStat('2+', 'Apps Published', Color(0xFFFF6B35)),
-              ],
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 32),
-
         // Specializations
         ScrollAnimatedItem(
           delay: const Duration(milliseconds: 400),
@@ -304,10 +236,7 @@ class AboutMeSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: Color(0xFF1A1A1A),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Color(0xFF2a2a2a),
-                width: 2,
-              ),
+              border: Border.all(color: Color(0xFF2a2a2a), width: 2),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -361,13 +290,13 @@ class AboutMeSection extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFF00D9FF).withValues(alpha:0.2),
-                  Color(0xFF00FFA3).withValues(alpha:0.2),
+                  Color(0xFF00D9FF).withValues(alpha: 0.2),
+                  Color(0xFF00FFA3).withValues(alpha: 0.2),
                 ],
               ),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: Color(0xFF00D9FF).withValues(alpha:0.3),
+                color: Color(0xFF00D9FF).withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -392,49 +321,9 @@ class AboutMeSection extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          Icon(
-            Icons.arrow_forward,
-            size: 16,
-            color: Colors.grey.shade700,
-          ),
+          Icon(Icons.arrow_forward, size: 16, color: Colors.grey.shade700),
         ],
       ),
-    );
-  }
-
-  Widget _buildStat(String number, String label, Color accentColor) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ShaderMask(
-          shaderCallback: (bounds) => LinearGradient(
-            colors: [
-              accentColor,
-              accentColor.withValues(alpha:0.6),
-            ],
-          ).createShader(bounds),
-          child: Text(
-            number,
-            style: const TextStyle(
-              fontSize: 48,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-              height: 1,
-              letterSpacing: -1,
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF888888),
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ],
     );
   }
 
@@ -449,11 +338,7 @@ class AboutMeSection extends StatelessWidget {
               color: Color(0xFF242424),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(
-              icon,
-              color: Color(0xFF00D9FF),
-              size: 20,
-            ),
+            child: Icon(icon, color: Color(0xFF00D9FF), size: 20),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -471,10 +356,7 @@ class AboutMeSection extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   description,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF888888),
-                  ),
+                  style: TextStyle(fontSize: 12, color: Color(0xFF888888)),
                 ),
               ],
             ),

@@ -316,37 +316,38 @@ class _ExperienceCardState extends State<ExperienceCard>
                                     ),
                                   ),
 
-                                  const SizedBox(height: 12),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: widget.isDesktop ? 16 : 8,
-                                      vertical: widget.isDesktop ? 8 : 2,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: _accentColor.withValues(
-                                        alpha: 0.1,
+                                  // Period badge - only show in mobile
+                                  if (!widget.isDesktop) ...[
+                                    const SizedBox(height: 12),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 2,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
+                                      decoration: BoxDecoration(
                                         color: _accentColor.withValues(
-                                          alpha: 0.3,
+                                          alpha: 0.1,
                                         ),
-                                        width: 1,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: _accentColor.withValues(
+                                            alpha: 0.3,
+                                          ),
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        widget.period,
+                                        style: TextStyle(
+                                          fontSize: 8,
+                                          color: _accentColor,
+                                          fontWeight: FontWeight.w300,
+                                          letterSpacing: 0.5,
+                                        ),
                                       ),
                                     ),
-                                    child: Text(
-                                      widget.period,
-                                      style: TextStyle(
-                                        fontSize: widget.isDesktop ? 13 : 8,
-                                        color: _accentColor,
-                                        fontWeight: widget.isDesktop
-                                            ? FontWeight.w700
-                                            : FontWeight.w300,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
+                                    const SizedBox(height: 12),
+                                  ],
 
                                   // Location & Type
                                   Row(
@@ -386,6 +387,31 @@ class _ExperienceCardState extends State<ExperienceCard>
                                 ],
                               ),
                             ),
+                            // Period badge - only show in desktop
+                            if (widget.isDesktop)
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: _accentColor.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: _accentColor.withValues(alpha: 0.3),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Text(
+                                  widget.period,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: _accentColor,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
 
