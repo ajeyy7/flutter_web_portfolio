@@ -1,4 +1,3 @@
-import 'package:Portfolio_Ajay/features/home/home.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,8 +26,11 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _textAnimation;
   late List<AnimationController> _letterControllers;
   late List<Animation<Offset>> _letterSlideAnimations;
+  late AnimationController _overlayFadeController;
+  late Animation<double> _overlayFadeAnimation;
 
   final List<String> _letters = "AJAY".split('');
+  bool _isVisible = true;
 
   @override
   void initState() {
@@ -76,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
         )
         .toList();
 
-    // Strip fade animations (NEW)
+    // Strip fade animations
     _stripFadeControllers = List.generate(
       _stripCount,
       (_) => AnimationController(duration: _stripFadeDuration, vsync: this),
@@ -88,6 +90,15 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         )
         .toList();
+
+    // Overall overlay fade animation
+    _overlayFadeController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _overlayFadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(parent: _overlayFadeController, curve: Curves.easeInOut),
+    );
   }
 
   Future<void> _startAnimation() async {
@@ -103,40 +114,33 @@ class _SplashScreenState extends State<SplashScreen>
     // Fade out text
     _textController.forward();
 
-    // Animate strips sequentially (falling down)
+    // Animate strips sequentially (falling down to reveal home screen)
     for (int i = 0; i < _stripControllers.length; i++) {
       Future.delayed(Duration(milliseconds: i * _stripDelayMs), () {
         if (mounted) {
           _stripControllers[i].forward();
-          
-          // Start fading the strip as soon as it reaches the bottom
-          Future.delayed(_stripDuration, () {
-            if (mounted) _stripFadeControllers[i].forward();
-          });
         }
       });
     }
 
-    // Navigate to home after animation
+    // Wait for strips to complete, then fade out the entire overlay
     final totalDuration = _stripDuration.inMilliseconds +
         (_stripCount * _stripDelayMs) +
-        _stripFadeDuration.inMilliseconds +
-        300;
+        500; // Small delay before final fade
     await Future.delayed(Duration(milliseconds: totalDuration));
 
     if (mounted) {
-      Navigator.of(context).pushReplacement(
-        PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const HomeScreen(),
-          transitionDuration: Duration.zero,
-        ),
-      );
+      await _overlayFadeController.forward();
+      setState(() {
+        _isVisible = false;
+      });
     }
   }
 
   @override
   void dispose() {
     _textController.dispose();
+    _overlayFadeController.dispose();
     for (var controller in _stripControllers) {
       controller.dispose();
     }
@@ -151,67 +155,100 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (!_isVisible) return const SizedBox.shrink();
+
     final screenWidth = MediaQuery.of(context).size.width;
     final stripWidth = screenWidth / _stripCount;
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          // Developer name in center with slide and fade animations
-          Center(
-            child: FadeTransition(
-              opacity: _textAnimation,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: List.generate(_letters.length, (index) {
-                  return SlideTransition(
-                    position: _letterSlideAnimations[index],
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        _letters[index],
-                        style: const TextStyle(
-                          fontSize: 140,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
-                          letterSpacing: 8,
-                          fontFamily: 'Montserrat',
-                        ),
+    return IgnorePointer(
+      child: Material(
+        color: Colors.transparent,
+        child: AnimatedBuilder(
+          animation: Listenable.merge([
+            _overlayFadeAnimation,
+            ..._stripAnimations,
+          ]),
+          builder: (context, child) {
+            return CustomPaint(
+              painter: SplashStripPainter(
+                stripAnimations: _stripAnimations.map((a) => a.value).toList(),
+                stripCount: _stripCount,
+                overlayOpacity: _overlayFadeAnimation.value,
+              ),
+              child: FadeTransition(
+                opacity: _overlayFadeAnimation,
+                child: Container(
+                  color: Colors.transparent,
+                  child: Center(
+                    child: FadeTransition(
+                      opacity: _textAnimation,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: List.generate(_letters.length, (index) {
+                          return SlideTransition(
+                            position: _letterSlideAnimations[index],
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text(
+                                _letters[index],
+                                style: const TextStyle(
+                                  fontSize: 140,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  letterSpacing: 8,
+                                  fontFamily: 'Montserrat',
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
                       ),
                     ),
-                  );
-                }),
-              ),
-            ),
-          ),
-
-          // Animated strips with fade effect
-          ...List.generate(_stripCount, (index) {
-            return AnimatedBuilder(
-              animation: Listenable.merge([
-                _stripAnimations[index],
-                _stripFadeAnimations[index],
-              ]),
-              builder: (context, _) {
-                return Positioned(
-                  left: index * stripWidth,
-                  top: 0,
-                  child: Opacity(
-                    opacity: _stripFadeAnimations[index].value,
-                    child: Container(
-                      width: stripWidth,
-                      height: MediaQuery.of(context).size.height *
-                          _stripAnimations[index].value,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
                   ),
-                );
-              },
+                ),
+              ),
             );
-          }),
-        ],
+          },
+        ),
       ),
     );
+  }
+}
+
+class SplashStripPainter extends CustomPainter {
+  final List<double> stripAnimations;
+  final int stripCount;
+  final double overlayOpacity;
+
+  SplashStripPainter({
+    required this.stripAnimations,
+    required this.stripCount,
+    required this.overlayOpacity,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black.withOpacity(overlayOpacity)
+      ..style = PaintingStyle.fill;
+
+    final stripWidth = size.width / stripCount;
+
+    for (int i = 0; i < stripCount; i++) {
+      final stripHeight = size.height * stripAnimations[i];
+      final rect = Rect.fromLTWH(
+        i * stripWidth,
+        stripHeight,
+        stripWidth,
+        size.height - stripHeight,
+      );
+      canvas.drawRect(rect, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(SplashStripPainter oldDelegate) {
+    return oldDelegate.overlayOpacity != overlayOpacity ||
+        oldDelegate.stripAnimations != stripAnimations;
   }
 }

@@ -96,11 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: size.height,
       padding: EdgeInsets.symmetric(horizontal: isDesktop ? 120 : 40),
-      child: Row(
-        children: [
-          Expanded(child: _buildHeroContent(isDesktop)),
-        ],
-      ),
+      child: Row(children: [Expanded(child: _buildHeroContent(isDesktop))]),
     );
   }
 
@@ -109,73 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Animated badge/tag
-        TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: 1),
-          duration: const Duration(milliseconds: 600),
-          builder: (context, value, child) {
-            return Opacity(
-              opacity: value,
-              child: Transform.translate(
-                offset: Offset(0, 20 * (1 - value)),
-                child: child,
-              ),
-            );
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF00D9FF).withValues(alpha:0.2),
-                  Color(0xFF00FFA3).withValues(alpha:0.2),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Color(0xFF00D9FF).withValues(alpha:0.3),
-                width: 1.5,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xFF00FFA3),
-                        Color(0xFF00D9FF),
-                      ],
-                    ),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xFF00D9FF).withValues(alpha:0.5),
-                        blurRadius: 8,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  'Available for Freelance',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF00D9FF),
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 32),
-
         // Greeting
         TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: 1),
@@ -196,10 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 2,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF00D4FF),
-                      Color(0xFF0099FF),
-                    ],
+                    colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
                   ),
                 ),
               ),
@@ -233,10 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: ShaderMask(
             shaderCallback: (bounds) => LinearGradient(
-              colors: [
-                Colors.white,
-                Colors.white.withValues(alpha:0.8),
-              ],
+              colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
             ).createShader(bounds),
             child: Text(
               'Ajaykrishna',
@@ -283,65 +206,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 32),
 
-        // Description with highlight
-        TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: 1),
-          duration: const Duration(milliseconds: 1400),
-          builder: (context, value, child) {
-            return Opacity(opacity: value, child: child);
-          },
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: isDesktop ? 600 : double.infinity,
-            ),
-            child: RichText(
-              text: TextSpan(
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFFB0B0B0),
-                  height: 1.8,
-                  letterSpacing: 0.2,
-                ),
-                children: [
-                  TextSpan(
-                    text: 'Crafting ',
-                  ),
-                  TextSpan(
-                    text: 'beautiful cross-platform experiences',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' with clean code and pixel-perfect design.',
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 48),
-
-        // Quick stats
-        TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: 1),
-          duration: const Duration(milliseconds: 1500),
-          builder: (context, value, child) {
-            return Opacity(opacity: value, child: child);
-          },
-          child: Row(
-            children: [
-              _buildQuickStat('2+', 'Years', Color(0xFF00D9FF)),
-              const SizedBox(width: 40),
-              _buildQuickStat('15+', 'Projects', Color(0xFF00FFA3)),
-              const SizedBox(width: 40),
-              _buildQuickStat('2+', 'Apps Live', Color(0xFFFF6B35)),
-            ],
-          ),
-        ),
-        const SizedBox(height: 60),
-
         // CTA Buttons
         TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: 1),
@@ -372,42 +236,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildQuickStat(String number, String label, Color color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ShaderMask(
-          shaderCallback: (bounds) => LinearGradient(
-            colors: [
-              color,
-              color.withValues(alpha:0.6),
-            ],
-          ).createShader(bounds),
-          child: Text(
-            number,
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-              height: 1,
-              letterSpacing: -1,
-            ),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Color(0xFF666666),
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildButton(
     String text, {
     required bool isPrimary,
@@ -431,14 +259,14 @@ class _HomeScreenState extends State<HomeScreen> {
             border: Border.all(
               color: isPrimary
                   ? Colors.transparent
-                  : Color(0xFF00D9FF).withValues(alpha:0.3),
+                  : Color(0xFF00D9FF).withValues(alpha: 0.3),
               width: 2,
             ),
             borderRadius: BorderRadius.circular(12),
             boxShadow: isPrimary
                 ? [
                     BoxShadow(
-                      color: Color(0xFF00D9FF).withValues(alpha:0.3),
+                      color: Color(0xFF00D9FF).withValues(alpha: 0.3),
                       blurRadius: 20,
                       spreadRadius: 0,
                       offset: Offset(0, 8),
