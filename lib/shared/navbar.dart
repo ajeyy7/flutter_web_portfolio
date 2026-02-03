@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 class NavBar extends StatelessWidget {
+  final String activeSection;
   final VoidCallback onAboutTap;
   final VoidCallback onSkillsTap;
   final VoidCallback onExperienceTap;
@@ -8,6 +9,7 @@ class NavBar extends StatelessWidget {
 
   const NavBar({
     super.key,
+    required this.activeSection,
     required this.onAboutTap,
     required this.onSkillsTap,
     required this.onExperienceTap,
@@ -35,15 +37,15 @@ class NavBar extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _NavItem(label: 'About', onTap: onAboutTap),
+            _NavItem(label: 'About', onTap: onAboutTap, isActive: activeSection == 'About'),
             const SizedBox(width: 32),
-            _NavItem(label: 'Skills', onTap: onSkillsTap),
+            _NavItem(label: 'Skills', onTap: onSkillsTap, isActive: activeSection == 'Skills'),
             const SizedBox(width: 32),
-            _NavItem(label: 'Experience', onTap: onExperienceTap),
+            _NavItem(label: 'Experience', onTap: onExperienceTap, isActive: activeSection == 'Experience'),
             const SizedBox(width: 32),
-            _NavItem(label: 'Projects', onTap: onProjectsTap),
+            _NavItem(label: 'Projects', onTap: onProjectsTap, isActive: activeSection == 'Projects'),
             const SizedBox(width: 32),
-            _NavItem(label: 'Contact', onTap: onContactTap),
+            _NavItem(label: 'Contact', onTap: onContactTap, isActive: activeSection == 'Contact'),
           ],
         ),
       ),
@@ -54,8 +56,13 @@ class NavBar extends StatelessWidget {
 class _NavItem extends StatefulWidget {
   final String label;
   final VoidCallback onTap;
+  final bool isActive;
 
-  const _NavItem({required this.label, required this.onTap});
+  const _NavItem({
+    required this.label,
+    required this.onTap,
+    required this.isActive,
+  });
 
   @override
   State<_NavItem> createState() => _NavItemState();
@@ -66,20 +73,39 @@ class _NavItemState extends State<_NavItem> {
 
   @override
   Widget build(BuildContext context) {
+    final isHighlighted = widget.isActive || _isHovered;
+    
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
         onTap: widget.onTap,
-        child: AnimatedDefaultTextStyle(
-          duration: const Duration(milliseconds: 200),
-          style: TextStyle(
-            color: _isHovered ? const Color(0xFF00FFA3) : Colors.white,
-            fontSize: 14,
-            fontWeight: _isHovered ? FontWeight.w600 : FontWeight.w400,
-          ),
-          child: Text(widget.label),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 200),
+              style: TextStyle(
+                color: isHighlighted ? const Color(0xFF00FFA3) : Colors.white,
+                fontSize: 14,
+                fontWeight: isHighlighted ? FontWeight.w600 : FontWeight.w400,
+              ),
+              child: Text(widget.label),
+            ),
+            const SizedBox(height: 4),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: 2,
+              width: widget.isActive ? 24 : 0,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
+                ),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ],
         ),
       ),
     );

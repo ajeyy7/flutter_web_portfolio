@@ -17,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   bool _showNavbar = false;
+  String _activeSection = 'About';
 
   // Section keys for navigation
   final GlobalKey _aboutKey = GlobalKey();
@@ -34,7 +35,42 @@ class _HomeScreenState extends State<HomeScreen> {
       } else if (_scrollController.offset <= 100 && _showNavbar) {
         setState(() => _showNavbar = false);
       }
+      _updateActiveSection();
     });
+  }
+
+  void _updateActiveSection() {
+    final screenHeight = MediaQuery.of(context).size.height;
+    
+    // Get positions of all sections
+    final sections = {
+      'About': _aboutKey,
+      'Skills': _skillsKey,
+      'Experience': _experienceKey,
+      'Projects': _projectsKey,
+      'Contact': _contactKey,
+    };
+
+    String? newActiveSection;
+    
+    for (var entry in sections.entries) {
+      final context = entry.value.currentContext;
+      if (context != null) {
+        final box = context.findRenderObject() as RenderBox?;
+        if (box != null) {
+          final position = box.localToGlobal(Offset.zero).dy;
+          // Check if section is in viewport (with some offset for better UX)
+          if (position <= screenHeight * 0.4 && position >= -box.size.height + screenHeight * 0.4) {
+            newActiveSection = entry.key;
+            break;
+          }
+        }
+      }
+    }
+
+    if (newActiveSection != null && newActiveSection != _activeSection) {
+      setState(() => _activeSection = newActiveSection!);
+    }
   }
 
   void _scrollToSection(GlobalKey key) {
@@ -80,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
               left: 0,
               right: 0,
               child: NavBar(
+                activeSection: _activeSection,
                 onAboutTap: () => _scrollToSection(_aboutKey),
                 onSkillsTap: () => _scrollToSection(_skillsKey),
                 onExperienceTap: () => _scrollToSection(_experienceKey),
