@@ -52,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 1000;
-    // final isTablet = size.width > 600 && size.width <= 1000;
 
     return Scaffold(
       body: Stack(
@@ -97,7 +96,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: size.height,
       padding: EdgeInsets.symmetric(horizontal: isDesktop ? 120 : 40),
-      child: Row(children: [Expanded(child: _buildHeroContent(isDesktop))]),
+      child: Row(
+        children: [
+          Expanded(child: _buildHeroContent(isDesktop)),
+        ],
+      ),
     );
   }
 
@@ -106,7 +109,74 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Animated greeting
+        // Animated badge/tag
+        TweenAnimationBuilder(
+          tween: Tween<double>(begin: 0, end: 1),
+          duration: const Duration(milliseconds: 600),
+          builder: (context, value, child) {
+            return Opacity(
+              opacity: value,
+              child: Transform.translate(
+                offset: Offset(0, 20 * (1 - value)),
+                child: child,
+              ),
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF00D9FF).withValues(alpha:0.2),
+                  Color(0xFF00FFA3).withValues(alpha:0.2),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: Color(0xFF00D9FF).withValues(alpha:0.3),
+                width: 1.5,
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF00FFA3),
+                        Color(0xFF00D9FF),
+                      ],
+                    ),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xFF00D9FF).withValues(alpha:0.5),
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  'Available for Freelance',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFF00D9FF),
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 32),
+
+        // Greeting
         TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: 1),
           duration: const Duration(milliseconds: 800),
@@ -119,18 +189,36 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           },
-          child: const Text(
-            "Hello, I'm",
-            style: TextStyle(
-              fontSize: 24,
-              color: Color(0xFF888888),
-              fontWeight: FontWeight.w300,
-            ),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 2,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF00D4FF),
+                      Color(0xFF0099FF),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                "HELLO, I'M",
+                style: TextStyle(
+                  fontSize: 13,
+                  letterSpacing: 3,
+                  color: Color(0xFF00D4FF),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
 
-        // Name
+        // Name with gradient
         TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: 1),
           duration: const Duration(milliseconds: 1000),
@@ -144,24 +232,27 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           child: ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [Color(0xFFFFFFFF), Color(0xFFCCCCCC)],
+            shaderCallback: (bounds) => LinearGradient(
+              colors: [
+                Colors.white,
+                Colors.white.withValues(alpha:0.8),
+              ],
             ).createShader(bounds),
             child: Text(
               'Ajaykrishna',
               style: TextStyle(
-                fontSize: isDesktop ? 72 : 56,
-                fontWeight: FontWeight.w700,
+                fontSize: isDesktop ? 80 : 56,
+                fontWeight: FontWeight.w900,
                 color: Colors.white,
                 height: 1.1,
-                letterSpacing: 2,
+                letterSpacing: -2,
               ),
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
 
-        // Title with gradient
+        // Title/Role
         TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: 1),
           duration: const Duration(milliseconds: 1200),
@@ -181,35 +272,72 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text(
               'Flutter Developer',
               style: TextStyle(
-                fontSize: isDesktop ? 48 : 36,
-                fontWeight: FontWeight.w700,
+                fontSize: isDesktop ? 56 : 40,
+                fontWeight: FontWeight.w900,
                 color: Colors.white,
                 height: 1.1,
-                letterSpacing: -1,
+                letterSpacing: -1.5,
               ),
             ),
           ),
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 32),
 
-        // Brief intro
+        // Description with highlight
         TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: 1),
           duration: const Duration(milliseconds: 1400),
           builder: (context, value, child) {
             return Opacity(opacity: value, child: child);
           },
-          child: SizedBox(
-            width: isDesktop ? 500 : double.infinity,
-            child: const Text(
-              'Crafting beautiful cross-platform experiences with clean code and pixel-perfect design.',
-              style: TextStyle(
-                fontSize: 20,
-                color: Color(0xFFAAAAAA),
-                height: 1.6,
-                fontWeight: FontWeight.w300,
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: isDesktop ? 600 : double.infinity,
+            ),
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFFB0B0B0),
+                  height: 1.8,
+                  letterSpacing: 0.2,
+                ),
+                children: [
+                  TextSpan(
+                    text: 'Crafting ',
+                  ),
+                  TextSpan(
+                    text: 'beautiful cross-platform experiences',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' with clean code and pixel-perfect design.',
+                  ),
+                ],
               ),
             ),
+          ),
+        ),
+        const SizedBox(height: 48),
+
+        // Quick stats
+        TweenAnimationBuilder(
+          tween: Tween<double>(begin: 0, end: 1),
+          duration: const Duration(milliseconds: 1500),
+          builder: (context, value, child) {
+            return Opacity(opacity: value, child: child);
+          },
+          child: Row(
+            children: [
+              _buildQuickStat('2+', 'Years', Color(0xFF00D9FF)),
+              const SizedBox(width: 40),
+              _buildQuickStat('15+', 'Projects', Color(0xFF00FFA3)),
+              const SizedBox(width: 40),
+              _buildQuickStat('2+', 'Apps Live', Color(0xFFFF6B35)),
+            ],
           ),
         ),
         const SizedBox(height: 60),
@@ -217,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // CTA Buttons
         TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: 1),
-          duration: const Duration(milliseconds: 1600),
+          duration: const Duration(milliseconds: 1700),
           builder: (context, value, child) {
             return Opacity(opacity: value, child: child);
           },
@@ -228,11 +356,13 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildButton(
                 'View Projects',
                 isPrimary: true,
+                icon: Icons.arrow_forward,
                 onTap: () => _scrollToSection(_projectsKey),
               ),
               _buildButton(
-                'Contact Me',
+                'Get in Touch',
                 isPrimary: false,
+                icon: Icons.mail_outline,
                 onTap: () => _scrollToSection(_contactKey),
               ),
             ],
@@ -242,9 +372,46 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildQuickStat(String number, String label, Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ShaderMask(
+          shaderCallback: (bounds) => LinearGradient(
+            colors: [
+              color,
+              color.withValues(alpha:0.6),
+            ],
+          ).createShader(bounds),
+          child: Text(
+            number,
+            style: const TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              height: 1,
+              letterSpacing: -1,
+            ),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Color(0xFF666666),
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.5,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildButton(
     String text, {
     required bool isPrimary,
+    required IconData icon,
     VoidCallback? onTap,
   }) {
     return MouseRegion(
@@ -253,29 +420,60 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
           decoration: BoxDecoration(
             gradient: isPrimary
                 ? const LinearGradient(
                     colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
                   )
                 : null,
-            border: !isPrimary
-                ? Border.all(color: Colors.white30, width: 1.5)
-                : null,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            text,
-            style: TextStyle(
-              color: isPrimary ? const Color(0xFF1a1a1a) : Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.5,
+            color: isPrimary ? null : Color(0xFF1A1A1A),
+            border: Border.all(
+              color: isPrimary
+                  ? Colors.transparent
+                  : Color(0xFF00D9FF).withValues(alpha:0.3),
+              width: 2,
             ),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: isPrimary
+                ? [
+                    BoxShadow(
+                      color: Color(0xFF00D9FF).withValues(alpha:0.3),
+                      blurRadius: 20,
+                      spreadRadius: 0,
+                      offset: Offset(0, 8),
+                    ),
+                  ]
+                : null,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  color: isPrimary ? const Color(0xFF0A0A0A) : Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Icon(
+                icon,
+                size: 18,
+                color: isPrimary ? const Color(0xFF0A0A0A) : Color(0xFF00D9FF),
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

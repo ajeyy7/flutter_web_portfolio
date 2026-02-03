@@ -16,41 +16,87 @@ class ExperienceSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Section Label with accent
           ScrollAnimatedItem(
-            child: const Text(
-              'JOURNEY',
-              style: TextStyle(
-                fontSize: 14,
-                letterSpacing: 4,
-                color: Color(0xFF666666),
-                fontWeight: FontWeight.w600,
-              ),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 2,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                const Text(
+                  'JOURNEY',
+                  style: TextStyle(
+                    fontSize: 13,
+                    letterSpacing: 3,
+                    color: Color(0xFF00D4FF),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 24),
+
+          // Main Title
           ScrollAnimatedItem(
             delay: const Duration(milliseconds: 100),
-            child: const Text(
-              'Experience',
-              style: TextStyle(
-                fontSize: 42,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                height: 1.2,
+            child: ShaderMask(
+              shaderCallback: (bounds) => LinearGradient(
+                colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
+              ).createShader(bounds),
+              child: const Text(
+                'Professional Experience',
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                  height: 1.2,
+                  letterSpacing: -1,
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 60),
+
+          const SizedBox(height: 16),
+
+          // Subtitle
+          ScrollAnimatedItem(
+            delay: const Duration(milliseconds: 150),
+            child: Text(
+              'My journey building scalable applications and real-time systems',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade400,
+                height: 1.6,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 80),
+
+          // Experience Timeline
           ...experiences.asMap().entries.map((entry) {
             final exp = entry.value;
             return ScrollAnimatedItem(
-              delay: Duration(milliseconds: 200 + (entry.key * 150)),
-              child: _buildExperienceCard(
-                exp['company']!,
-                exp['role']!,
-                exp['period']!,
-                exp['description']!,
-                isDesktop,
+              delay: Duration(milliseconds: 200 + (entry.key * 100)),
+              child: ExperienceCard(
+                company: exp['company'] as String, // Added 'as String'
+                role: exp['role'] as String, // Added 'as String'
+                period: exp['period'] as String, // Added 'as String'
+                location: exp['location'] as String, // Added 'as String'
+                type: exp['type'] as String, // Added 'as String'
+                description: exp['description'] as String, // Added 'as String'
+                highlights: exp['highlights'] as List<String>,
+                isDesktop: isDesktop,
+                index: entry.key,
+                isLast: entry.key == experiences.length - 1,
               ),
             );
           }),
@@ -58,83 +104,395 @@ class ExperienceSection extends StatelessWidget {
       ),
     );
   }
-    Widget _buildExperienceCard(
-    String company,
-    String role,
-    String period,
-    String description,
-    bool isDesktop,
-  ) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 32),
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        color: const Color(0xFF242424),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFF2a2a2a), width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
-                  ),
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+}
+
+class ExperienceCard extends StatefulWidget {
+  final String company;
+  final String role;
+  final String period;
+  final String location;
+  final String type;
+  final String description;
+  final List<String> highlights;
+  final bool isDesktop;
+  final int index;
+  final bool isLast;
+
+  const ExperienceCard({
+    super.key,
+    required this.company,
+    required this.role,
+    required this.period,
+    required this.location,
+    required this.type,
+    required this.description,
+    required this.highlights,
+    required this.isDesktop,
+    required this.index,
+    required this.isLast,
+  });
+
+  @override
+  State<ExperienceCard> createState() => _ExperienceCardState();
+}
+
+class _ExperienceCardState extends State<ExperienceCard>
+    with SingleTickerProviderStateMixin {
+  bool _isHovered = false;
+  bool _isExpanded = false;
+  late AnimationController _controller;
+  late Animation<double> _elevationAnimation;
+
+  // Experience accent colors
+  final List<Color> _accentColors = [
+    Color(0xFF00FFA3), // AlgoBotix - Green (Current)
+    Color(0xFF00D9FF), // RAG Technologies - Cyan
+    Color(0xFFFF6B35), // Luminar - Orange
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _elevationAnimation = Tween<double>(
+      begin: 0.0,
+      end: 8.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Color get _accentColor => _accentColors[widget.index % _accentColors.length];
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() => _isHovered = true);
+        _controller.forward();
+      },
+      onExit: (_) {
+        setState(() => _isHovered = false);
+        _controller.reverse();
+      },
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Container(
+            margin: EdgeInsets.only(bottom: widget.isLast ? 0 : 40),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Timeline indicator
+                Column(
                   children: [
-                    Text(
-                      company,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                    // Dot
+                    Container(
+                      width: 16,
+                      height: 16,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            _accentColor,
+                            _accentColor.withValues(alpha: 0.6),
+                          ],
+                        ),
+                        shape: BoxShape.circle,
+                        boxShadow: _isHovered
+                            ? [
+                                BoxShadow(
+                                  color: _accentColor.withValues(alpha: 0.5),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                ),
+                              ]
+                            : null,
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color: Color(0xFF1A1A1A),
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      role,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF00D9FF),
-                        fontWeight: FontWeight.w500,
+                    // Connecting line
+                    if (!widget.isLast)
+                      Container(
+                        width: 2,
+                        height: 180,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              _accentColor.withValues(alpha: 0.3),
+                              _accentColors[(widget.index + 1) %
+                                      _accentColors.length]
+                                  .withValues(alpha: 0.1),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
                   ],
                 ),
-              ),
-              Text(
-                period,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF888888),
-                  fontWeight: FontWeight.w500,
+
+                const SizedBox(width: 32),
+
+                // Content Card
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(32),
+                    decoration: BoxDecoration(
+                      gradient: _isHovered
+                          ? LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xFF1A1A1A),
+                                _accentColor.withValues(alpha: 0.03),
+                              ],
+                            )
+                          : null,
+                      color: _isHovered ? null : const Color(0xFF1A1A1A),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: _isHovered
+                            ? _accentColor.withValues(alpha: 0.4)
+                            : const Color(0xFF2a2a2a),
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: _isHovered
+                              ? _accentColor.withValues(alpha: 0.15)
+                              : Colors.black.withValues(alpha: 0.2),
+                          blurRadius: _isHovered ? 24 : 12,
+                          spreadRadius: 0,
+                          offset: Offset(0, _elevationAnimation.value),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Header
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Company Name
+                                  Text(
+                                    widget.company,
+                                    style: TextStyle(
+                                      fontSize: widget.isDesktop ? 28 : 24,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.white,
+                                      letterSpacing: -0.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+
+                                  // Role
+                                  Text(
+                                    widget.role,
+                                    style: TextStyle(
+                                      fontSize: widget.isDesktop ? 18 : 16,
+                                      color: _accentColor,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 0.3,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 12),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: widget.isDesktop ? 16 : 8,
+                                      vertical: widget.isDesktop ? 8 : 2,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: _accentColor.withValues(
+                                        alpha: 0.1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: _accentColor.withValues(
+                                          alpha: 0.3,
+                                        ),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      widget.period,
+                                      style: TextStyle(
+                                        fontSize: widget.isDesktop ? 13 : 8,
+                                        color: _accentColor,
+                                        fontWeight: widget.isDesktop
+                                            ? FontWeight.w700
+                                            : FontWeight.w300,
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+
+                                  // Location & Type
+                                  Row(
+                                    spacing: widget.isDesktop ? 12 : 4,
+                                    children: [
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        size: widget.isDesktop ? 16 : 10,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      Text(
+                                        widget.location,
+                                        style: TextStyle(
+                                          fontSize: widget.isDesktop ? 14 : 10,
+                                          color: Colors.grey.shade500,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 4,
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade700,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      Text(
+                                        widget.type,
+                                        style: TextStyle(
+                                          fontSize: widget.isDesktop ? 14 : 10,
+                                          color: Colors.grey.shade500,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: widget.isDesktop ? 24 : 16),
+
+                        // Description
+                        Text(
+                          widget.description,
+                          style: TextStyle(
+                            fontSize: widget.isDesktop ? 15 : 14,
+                            color: Color(0xFFB0B0B0),
+                            height: 1.7,
+                            letterSpacing: 0.2,
+                          ),
+                        ),
+
+                        const SizedBox(height: 24),
+
+                        // Expandable Key Highlights
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _isExpanded = !_isExpanded;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                'KEY HIGHLIGHTS',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  letterSpacing: 2,
+                                  color: _accentColor.withValues(alpha: 0.8),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              AnimatedRotation(
+                                turns: _isExpanded ? 0.5 : 0,
+                                duration: const Duration(milliseconds: 200),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 20,
+                                  color: _accentColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        AnimatedSize(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          child: _isExpanded
+                              ? Column(
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    ...widget.highlights.map((highlight) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 12,
+                                        ),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                top: 6,
+                                              ),
+                                              width: 6,
+                                              height: 6,
+                                              decoration: BoxDecoration(
+                                                color: _accentColor.withValues(
+                                                  alpha: 0.6,
+                                                ),
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: Text(
+                                                highlight,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Color(0xFF999999),
+                                                  height: 1.6,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Text(
-            description,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Color(0xFFAAAAAA),
-              height: 1.6,
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
-
 }
