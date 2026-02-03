@@ -21,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen>
   late List<AnimationController> _stripControllers;
   late List<Animation<double>> _stripAnimations;
   late List<AnimationController> _stripFadeControllers;
-  late List<Animation<double>> _stripFadeAnimations;
   late AnimationController _textController;
   late Animation<double> _textAnimation;
   late List<AnimationController> _letterControllers;
@@ -83,13 +82,6 @@ class _SplashScreenState extends State<SplashScreen>
       _stripCount,
       (_) => AnimationController(duration: _stripFadeDuration, vsync: this),
     );
-    _stripFadeAnimations = _stripFadeControllers
-        .map(
-          (controller) => Tween<double>(begin: 1.0, end: 0.0).animate(
-            CurvedAnimation(parent: controller, curve: Curves.easeInOut),
-          ),
-        )
-        .toList();
 
     // Overall overlay fade animation
     _overlayFadeController = AnimationController(
@@ -124,7 +116,8 @@ class _SplashScreenState extends State<SplashScreen>
     }
 
     // Wait for strips to complete, then fade out the entire overlay
-    final totalDuration = _stripDuration.inMilliseconds +
+    final totalDuration =
+        _stripDuration.inMilliseconds +
         (_stripCount * _stripDelayMs) +
         500; // Small delay before final fade
     await Future.delayed(Duration(milliseconds: totalDuration));
@@ -157,9 +150,6 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     if (!_isVisible) return const SizedBox.shrink();
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    final stripWidth = screenWidth / _stripCount;
-
     return IgnorePointer(
       child: Material(
         color: Colors.transparent,
@@ -188,7 +178,9 @@ class _SplashScreenState extends State<SplashScreen>
                           return SlideTransition(
                             position: _letterSlideAnimations[index],
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0,
+                              ),
                               child: Text(
                                 _letters[index],
                                 style: const TextStyle(
