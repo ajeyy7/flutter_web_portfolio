@@ -25,14 +25,14 @@ class ContactMeSection extends StatelessWidget {
   }
 
   Future<void> _launchLinkedIn() async {
-    final Uri url = Uri.parse('https://www.linkedin.com/in/your-profile');
+    final Uri url = Uri.parse('https://www.linkedin.com/in/ajaykrishna-vp');
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
   Future<void> _launchGitHub() async {
-    final Uri url = Uri.parse('https://github.com/your-username');
+    final Uri url = Uri.parse('https://github.com/Ajaykrishnak2001');
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     }
@@ -58,10 +58,10 @@ class ContactMeSection extends StatelessWidget {
         vertical: 120,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Section Label with accent
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 width: 40,
@@ -74,7 +74,7 @@ class ContactMeSection extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               const Text(
-                'GET IN TOUCH',
+                'CONTACT',
                 style: TextStyle(
                   fontSize: 13,
                   letterSpacing: 3,
@@ -82,115 +82,132 @@ class ContactMeSection extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(width: 12),
-              Container(
-                width: 40,
-                height: 2,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF0099FF), Color(0xFF00D4FF)],
-                  ),
-                ),
-              ),
             ],
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
 
           // Main Title
           ShaderMask(
             shaderCallback: (bounds) => LinearGradient(
-              colors: [Colors.white, Colors.white.withValues(alpha:0.8)],
+              colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
             ).createShader(bounds),
             child: Text(
               "Let's Work Together",
               style: TextStyle(
-                fontSize: isDesktop ? 56 : 40,
-                fontWeight: FontWeight.w900,
+                fontSize: isDesktop ? 48 : 36,
+                fontWeight: FontWeight.w800,
                 color: Colors.white,
                 height: 1.2,
-                letterSpacing: -1.5,
+                letterSpacing: -1,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
 
           // Subtitle
-          Container(
-            constraints: BoxConstraints(maxWidth: 600),
-            child: Text(
-              'Have a project in mind? Let\'s create something amazing together.',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade400,
-                height: 1.6,
-              ),
-              textAlign: TextAlign.center,
+          Text(
+            'Have an idea? Let\'s turn it into reality.',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey.shade400,
+              height: 1.6,
             ),
           ),
 
-          const SizedBox(height: 80),
+          SizedBox(height: isDesktop ? 80 : 60),
 
-          // Contact Cards
+          // Contact Info Grid
           if (isDesktop)
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Flexible(
-                  child: ContactCard(
-                    icon: Icons.email_outlined,
-                    label: 'Email',
-                    value: 'ajaykrishna9872@gmail.com',
-                    accentColor: Color(0xFF00D9FF),
-                    onTap: _launchEmail,
-                    onCopy: () => _copyToClipboard(
-                      context,
-                      'ajaykrishna9872@gmail.com',
-                      'Email',
-                    ),
+                // Left Column - Contact Details
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildContactItem(
+                        context: context,
+                        label: 'Email',
+                        value: 'ajaykrishna9872@gmail.com',
+                        onTap: _launchEmail,
+                        onCopy: () => _copyToClipboard(
+                          context,
+                          'ajaykrishna9872@gmail.com',
+                          'Email',
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      _buildContactItem(
+                        context: context,
+                        label: 'Phone',
+                        value: '+91 984 657 2149',
+                        onTap: _launchPhone,
+                        onCopy: () => _copyToClipboard(
+                          context,
+                          '+91 984 657 2149',
+                          'Phone',
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      _buildContactItem(
+                        context: context,
+                        label: 'Location',
+                        value: 'Kerala, India',
+                        onTap: null,
+                        onCopy: () => _copyToClipboard(
+                          context,
+                          'Kerala, India',
+                          'Location',
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 32),
-                Flexible(
-                  child: ContactCard(
-                    icon: Icons.phone_outlined,
-                    label: 'Phone',
-                    value: '+91 984 657 2149',
-                    accentColor: Color(0xFF00FFA3),
-                    onTap: _launchPhone,
-                    onCopy: () => _copyToClipboard(
-                      context,
-                      '+91 984 657 2149',
-                      'Phone',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 32),
-                Flexible(
-                  child: ContactCard(
-                    icon: Icons.location_on_outlined,
-                    label: 'Location',
-                    value: 'Kerala, India',
-                    accentColor: Color(0xFFFF6B35),
-                    onTap: null,
-                    onCopy: () => _copyToClipboard(
-                      context,
-                      'Kerala, India',
-                      'Location',
-                    ),
+
+                const SizedBox(width: 80),
+
+                // Right Column - Social & CTA
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'SOCIAL',
+                        style: TextStyle(
+                          fontSize: 11,
+                          letterSpacing: 2,
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      _buildSocialLink(
+                        'GitHub',
+                        'github.com/Ajaykrishnak2001',
+                        _launchGitHub,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildSocialLink(
+                        'LinkedIn',
+                        'linkedin.com/in/ajaykrishna-vp',
+                        _launchLinkedIn,
+                      ),
+                    ],
                   ),
                 ),
               ],
             )
           else
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ContactCard(
-                  icon: Icons.email_outlined,
+                _buildContactItem(
+                  context: context,
                   label: 'Email',
                   value: 'ajaykrishna9872@gmail.com',
-                  accentColor: Color(0xFF00D9FF),
                   onTap: _launchEmail,
                   onCopy: () => _copyToClipboard(
                     context,
@@ -198,289 +215,190 @@ class ContactMeSection extends StatelessWidget {
                     'Email',
                   ),
                 ),
-                const SizedBox(height: 24),
-                ContactCard(
-                  icon: Icons.phone_outlined,
+                const SizedBox(height: 32),
+                _buildContactItem(
+                  context: context,
                   label: 'Phone',
                   value: '+91 984 657 2149',
-                  accentColor: Color(0xFF00FFA3),
                   onTap: _launchPhone,
                   onCopy: () =>
                       _copyToClipboard(context, '+91 984 657 2149', 'Phone'),
                 ),
-                const SizedBox(height: 24),
-                ContactCard(
-                  icon: Icons.location_on_outlined,
+                const SizedBox(height: 32),
+                _buildContactItem(
+                  context: context,
                   label: 'Location',
                   value: 'Kerala, India',
-                  accentColor: Color(0xFFFF6B35),
                   onTap: null,
                   onCopy: () =>
                       _copyToClipboard(context, 'Kerala, India', 'Location'),
                 ),
+                const SizedBox(height: 60),
+                Text(
+                  'SOCIAL',
+                  style: TextStyle(
+                    fontSize: 11,
+                    letterSpacing: 2,
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                _buildSocialLink(
+                  'GitHub',
+                  'github.com/Ajaykrishnak2001',
+                  _launchGitHub,
+                ),
+                const SizedBox(height: 16),
+                _buildSocialLink(
+                  'LinkedIn',
+                  'linkedin.com/in/ajaykrishna-vp',
+                  _launchLinkedIn,
+                ),
               ],
             ),
 
-          const SizedBox(height: 80),
-
-          // Social Links
-          Column(
-            children: [
-              Text(
-                'CONNECT WITH ME',
-                style: TextStyle(
-                  fontSize: 11,
-                  letterSpacing: 2,
-                  color: Colors.grey.shade600,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SocialButton(
-                    icon: Icons.code,
-                    label: 'GitHub',
-                    color: Color(0xFFFFFFFF),
-                    onTap: _launchGitHub,
-                  ),
-                  const SizedBox(width: 20),
-                  SocialButton(
-                    icon: Icons.business_center,
-                    label: 'LinkedIn',
-                    color: Color(0xFF0077B5),
-                    onTap: _launchLinkedIn,
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 80),
+          const SizedBox(height: 100),
 
           // Footer
-          Column(
-            children: [
-              Container(
-                width: 60,
-                height: 2,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF00D9FF).withValues(alpha:0.5),
-                      Colors.transparent,
-                    ],
+          Center(
+            child: Column(
+              children: [
+                Container(
+                  width: 60,
+                  height: 2,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF00D9FF).withValues(alpha: 0.5),
+                        Colors.transparent,
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                '© 2026 AjayKrishna. Built with Flutter 💙',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF666666),
-                  letterSpacing: 0.5,
+                const SizedBox(height: 24),
+                Text(
+                  '© 2026 AjayKrishna. Built with Flutter 💙',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF666666),
+                    letterSpacing: 0.5,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'All rights reserved.',
-                style: TextStyle(fontSize: 12, color: Color(0xFF444444)),
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  'All rights reserved.',
+                  style: TextStyle(fontSize: 12, color: Color(0xFF444444)),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
-}
 
-// Contact Card Widget - NO ANIMATIONS
-class ContactCard extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color accentColor;
-  final VoidCallback? onTap;
-  final VoidCallback onCopy;
-
-  const ContactCard({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.accentColor,
-    this.onTap,
-    required this.onCopy,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(32),
-        decoration: BoxDecoration(
-          color: Color(0xFF1A1A1A),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: Color(0xFF2a2a2a),
-            width: 2,
+  Widget _buildContactItem({
+    required BuildContext context,
+    required String label,
+    required String value,
+    required VoidCallback? onTap,
+    required VoidCallback onCopy,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label.toUpperCase(),
+          style: TextStyle(
+            fontSize: 11,
+            letterSpacing: 2,
+            color: Colors.grey.shade600,
+            fontWeight: FontWeight.w700,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha:0.2),
-              blurRadius: 12,
-              spreadRadius: 0,
-              offset: Offset(0, 4),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                value,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.3,
+                ),
+              ),
             ),
+            const SizedBox(width: 16),
+            if (onTap != null) _buildIconButton(Icons.arrow_outward, onTap),
+            const SizedBox(width: 8),
+            if (onTap != null) _buildIconButton(Icons.content_copy, onCopy),
           ],
         ),
-        child: Column(
-          children: [
-            // Icon
-            Container(
-              width: 64,
-              height: 64,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    accentColor.withValues(alpha:0.2),
-                    accentColor.withValues(alpha:0.1),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: accentColor.withValues(alpha:0.3),
-                  width: 1.5,
-                ),
-              ),
-              child: Icon(
-                icon,
-                color: accentColor,
-                size: 28,
-              ),
-            ),
-            const SizedBox(height: 20),
+      ],
+    );
+  }
 
-            // Label
-            Text(
-              label.toUpperCase(),
-              style: TextStyle(
-                fontSize: 11,
-                letterSpacing: 2,
-                color: accentColor.withValues(alpha:0.8),
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // Value
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.3,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-
-            // Copy Button
-            GestureDetector(
-              onTap: onCopy,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: accentColor.withValues(alpha:0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: accentColor.withValues(alpha:0.3),
-                    width: 1,
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.content_copy,
-                      size: 14,
-                      color: accentColor,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Copy',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: accentColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+  Widget _buildIconButton(IconData icon, VoidCallback onTap) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Color(0xFF242424),
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: Color(0xFF2a2a2a), width: 1),
+          ),
+          child: Icon(icon, size: 16, color: Color(0xFF00D9FF)),
         ),
       ),
     );
   }
-}
 
-// Social Button Widget - NO ANIMATIONS
-class SocialButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
-
-  const SocialButton({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.color,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        decoration: BoxDecoration(
-          color: Color(0xFF1A1A1A),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: Color(0xFF2a2a2a),
-            width: 2,
+  Widget _buildSocialLink(
+    String platform,
+    String username,
+    VoidCallback onTap,
+  ) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Color(0xFF2a2a2a), width: 1),
+            ),
           ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: Colors.grey.shade600,
-              size: 20,
-            ),
-            const SizedBox(width: 10),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade400,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.5,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    platform,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    username,
+                    style: TextStyle(fontSize: 13, color: Color(0xFF888888)),
+                  ),
+                ],
               ),
-            ),
-          ],
+              Icon(Icons.arrow_outward, size: 18, color: Color(0xFF00D9FF)),
+            ],
+          ),
         ),
       ),
     );

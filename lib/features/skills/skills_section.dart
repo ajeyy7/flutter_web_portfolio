@@ -189,12 +189,7 @@ class _SkillIconState extends State<SkillIcon> {
               width: size * 0.45,
               child: SvgPicture.asset(
                 widget.svg,
-                colorFilter: _isHovered
-                    ? ColorFilter.mode(
-                        widget.accentColor,
-                        BlendMode.srcIn,
-                      )
-                    : null,
+                
               ),
             ),
             SizedBox(height: 8),

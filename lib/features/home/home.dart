@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _updateActiveSection() {
     final screenHeight = MediaQuery.of(context).size.height;
-    
+
     // Get positions of all sections
     final sections = {
       'About': _aboutKey,
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     };
 
     String? newActiveSection;
-    
+
     for (var entry in sections.entries) {
       final context = entry.value.currentContext;
       if (context != null) {
@@ -60,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
         if (box != null) {
           final position = box.localToGlobal(Offset.zero).dy;
           // Check if section is in viewport (with some offset for better UX)
-          if (position <= screenHeight * 0.4 && position >= -box.size.height + screenHeight * 0.4) {
+          if (position <= screenHeight * 0.4 &&
+              position >= -box.size.height + screenHeight * 0.4) {
             newActiveSection = entry.key;
             break;
           }
@@ -133,13 +134,34 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: size.height,
       padding: EdgeInsets.symmetric(horizontal: isDesktop ? 120 : 40),
-      child: Row(children: [Expanded(child: _buildHeroContent(isDesktop))]),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (isDesktop)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Left: Main Content
+                Expanded(flex: 3, child: _buildHeroContent(isDesktop)),
+                const SizedBox(width: 100),
+              ],
+            )
+          else
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeroContent(isDesktop),
+                const SizedBox(height: 60),
+              ],
+            ),
+        ],
+      ),
     );
   }
 
   Widget _buildHeroContent(bool isDesktop) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Greeting
@@ -156,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(width: 12),
             const Text(
-              "HELLO, I'M",
+              "HI, I'M",
               style: TextStyle(
                 fontSize: 13,
                 letterSpacing: 3,
@@ -168,15 +190,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 24),
 
-        // Name with gradient
+        // Name
         ShaderMask(
           shaderCallback: (bounds) => LinearGradient(
-            colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
+            colors: [Colors.white, Colors.white.withValues(alpha:0.8)],
           ).createShader(bounds),
           child: Text(
             'Ajaykrishna',
             style: TextStyle(
-              fontSize: isDesktop ? 80 : 56,
+              fontSize: isDesktop ? 72 : 56,
               fontWeight: FontWeight.w900,
               color: Colors.white,
               height: 1.1,
@@ -186,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 12),
 
-        // Title/Role
+        // Role
         ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
             colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
@@ -194,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Text(
             'Flutter Developer',
             style: TextStyle(
-              fontSize: isDesktop ? 56 : 40,
+              fontSize: isDesktop ? 48 : 36,
               fontWeight: FontWeight.w900,
               color: Colors.white,
               height: 1.1,
@@ -204,10 +226,27 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 32),
 
+        // Tagline
+        Container(
+          constraints: BoxConstraints(
+            maxWidth: isDesktop ? 500 : double.infinity,
+          ),
+          child: Text(
+            'Transforming ideas into production-ready apps across Mobile, Web & Desktop platforms.',
+            style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFFB0B0B0),
+              height: 1.7,
+              letterSpacing: 0.2,
+            ),
+          ),
+        ),
+        const SizedBox(height: 48),
+
         // CTA Buttons
         Wrap(
-          spacing: 20,
-          runSpacing: 20,
+          spacing: 16,
+          runSpacing: 16,
           children: [
             _buildButton(
               'View Projects',
@@ -237,8 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+        child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
           decoration: BoxDecoration(
             gradient: isPrimary
@@ -257,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
             boxShadow: isPrimary
                 ? [
                     BoxShadow(
-                      color: Color(0xFF00D9FF).withValues(alpha: 0.3),
+                      color: Color(0xFF00D9FF).withValues(alpha:0.3),
                       blurRadius: 20,
                       spreadRadius: 0,
                       offset: Offset(0, 8),

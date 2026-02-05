@@ -221,7 +221,7 @@ class SplashStripPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(overlayOpacity)
+      ..color = Colors.black.withValues(alpha: overlayOpacity)
       ..style = PaintingStyle.fill;
 
     final stripWidth = size.width / stripCount;

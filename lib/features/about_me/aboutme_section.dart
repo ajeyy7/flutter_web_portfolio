@@ -46,9 +46,7 @@ class AboutMeSection extends StatelessWidget {
               colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
             ).createShader(bounds),
             child: Text(
-              isDesktop
-                  ? 'Building Digital Experiences\nAcross Platforms'
-                  : 'Building Digital\nExperiences',
+              'Who I Am & What I Do',
               style: TextStyle(
                 fontSize: isDesktop ? 48 : 36,
                 fontWeight: FontWeight.w800,
@@ -90,7 +88,7 @@ class AboutMeSection extends StatelessWidget {
       children: [
         // Main Description
         const Text(
-          'I specialize in turning ideas into fully functional, production-ready apps using Flutter. Whether it\'s a startup MVP, a business app, or a custom solution, I can take your vision from concept to launch.',
+          'I\'m a Flutter developer passionate about building elegant, scalable applications. My focus is on creating seamless user experiences while maintaining clean, maintainable code.',
           style: TextStyle(
             fontSize: 16,
             color: Color(0xFFB0B0B0),
@@ -153,58 +151,6 @@ class AboutMeSection extends StatelessWidget {
         ),
 
         const SizedBox(height: 32),
-
-        // CTA
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFF00D9FF).withValues(alpha: 0.1),
-                Color(0xFF00FFA3).withValues(alpha: 0.1),
-              ],
-            ),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: Color(0xFF00D9FF).withValues(alpha: 0.3),
-              width: 2,
-            ),
-          ),
-          child: Row(
-            children: [
-              Icon(
-                Icons.lightbulb_outline,
-                color: Color(0xFF00D9FF),
-                size: 24,
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Have an idea?',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Let\'s connect and bring it to life with Flutter',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFFB0B0B0),
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }
@@ -242,7 +188,7 @@ class AboutMeSection extends StatelessWidget {
               _buildSpecialization(
                 Icons.layers,
                 'State Management',
-                'Riverpod, GetX, BLoC',
+                'Provider, Riverpod, GetX, BLoC',
               ),
               _buildSpecialization(
                 Icons.api,
