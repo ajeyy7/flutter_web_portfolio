@@ -4,8 +4,8 @@ import 'package:Portfolio_Ajay/features/contact_me/contactme_section.dart';
 import 'package:Portfolio_Ajay/features/experience/experince_section.dart';
 import 'package:Portfolio_Ajay/features/projects/projects_section.dart';
 import 'package:Portfolio_Ajay/features/skills/skills_section.dart';
-import 'package:Portfolio_Ajay/shared/navbar.dart';
-import 'package:Portfolio_Ajay/shared/particle_background.dart';
+import 'package:Portfolio_Ajay/widgets/navbar.dart';
+import 'package:Portfolio_Ajay/widgets/particle_background.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
