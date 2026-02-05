@@ -1,3 +1,4 @@
+import 'package:Portfolio_Ajay/core/constants/constants.dart';
 import 'package:Portfolio_Ajay/data/projects.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +25,8 @@ class ProjectsSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xFF00D4FF),
-                      Color(0xFF0099FF),
+                      AppColors.cyan,
+                      AppColors.blue,
                     ],
                   ),
                 ),
@@ -36,7 +37,7 @@ class ProjectsSection extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   letterSpacing: 3,
-                  color: Color(0xFF00D4FF),
+                  color: AppColors.cyan,
                   fontWeight: FontWeight.w700,
                 ),
               ),

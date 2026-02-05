@@ -1,4 +1,6 @@
+import 'package:Portfolio_Ajay/core/constants/constants.dart';
 import 'package:flutter/material.dart';
+
 class NavBar extends StatelessWidget {
   final String activeSection;
   final VoidCallback onAboutTap;
@@ -37,15 +39,35 @@ class NavBar extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _NavItem(label: 'About', onTap: onAboutTap, isActive: activeSection == 'About'),
+            _NavItem(
+              label: 'About',
+              onTap: onAboutTap,
+              isActive: activeSection == 'About',
+            ),
             const SizedBox(width: 32),
-            _NavItem(label: 'Skills', onTap: onSkillsTap, isActive: activeSection == 'Skills'),
+            _NavItem(
+              label: 'Skills',
+              onTap: onSkillsTap,
+              isActive: activeSection == 'Skills',
+            ),
             const SizedBox(width: 32),
-            _NavItem(label: 'Experience', onTap: onExperienceTap, isActive: activeSection == 'Experience'),
+            _NavItem(
+              label: 'Experience',
+              onTap: onExperienceTap,
+              isActive: activeSection == 'Experience',
+            ),
             const SizedBox(width: 32),
-            _NavItem(label: 'Projects', onTap: onProjectsTap, isActive: activeSection == 'Projects'),
+            _NavItem(
+              label: 'Projects',
+              onTap: onProjectsTap,
+              isActive: activeSection == 'Projects',
+            ),
             const SizedBox(width: 32),
-            _NavItem(label: 'Contact', onTap: onContactTap, isActive: activeSection == 'Contact'),
+            _NavItem(
+              label: 'Contact',
+              onTap: onContactTap,
+              isActive: activeSection == 'Contact',
+            ),
           ],
         ),
       ),
@@ -74,7 +96,7 @@ class _NavItemState extends State<_NavItem> {
   @override
   Widget build(BuildContext context) {
     final isHighlighted = widget.isActive || _isHovered;
-    
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _isHovered = true),
@@ -87,7 +109,7 @@ class _NavItemState extends State<_NavItem> {
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: TextStyle(
-                color: isHighlighted ? const Color(0xFF00FFA3) : Colors.white,
+                color: isHighlighted ? AppColors.cyan : Colors.white,
                 fontSize: 14,
                 fontWeight: isHighlighted ? FontWeight.w600 : FontWeight.w400,
               ),
@@ -100,7 +122,7 @@ class _NavItemState extends State<_NavItem> {
               width: widget.isActive ? 24 : 0,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
+                  colors: [AppColors.cyan, AppColors.blue],
                 ),
                 borderRadius: BorderRadius.circular(2),
               ),

@@ -1,3 +1,4 @@
+import 'package:Portfolio_Ajay/core/constants/constants.dart';
 import 'package:Portfolio_Ajay/data/experince.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class ExperienceSection extends StatelessWidget {
                 height: 2,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
+                    colors: [AppColors.cyan, AppColors.blue],
                   ),
                 ),
               ),
@@ -33,7 +34,7 @@ class ExperienceSection extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   letterSpacing: 3,
-                  color: Color(0xFF00D4FF),
+                  color: AppColors.cyan,
                   fontWeight: FontWeight.w700,
                 ),
               ),

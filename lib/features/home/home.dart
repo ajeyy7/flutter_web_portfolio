@@ -1,3 +1,4 @@
+import 'package:Portfolio_Ajay/core/constants/constants.dart';
 import 'package:Portfolio_Ajay/features/about_me/aboutme_section.dart';
 import 'package:Portfolio_Ajay/features/contact_me/contactme_section.dart';
 import 'package:Portfolio_Ajay/features/experience/experince_section.dart';
@@ -172,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 2,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF00D4FF), Color(0xFF0099FF)],
+                  colors: [AppColors.cyan, AppColors.blue],
                 ),
               ),
             ),
@@ -182,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                 fontSize: 13,
                 letterSpacing: 3,
-                color: Color(0xFF00D4FF),
+                color: AppColors.cyan,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -193,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // Name
         ShaderMask(
           shaderCallback: (bounds) => LinearGradient(
-            colors: [Colors.white, Colors.white.withValues(alpha:0.8)],
+            colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
           ).createShader(bounds),
           child: Text(
             'Ajaykrishna',
@@ -211,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // Role
         ShaderMask(
           shaderCallback: (bounds) => const LinearGradient(
-            colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
+            colors: [AppColors.cyan, AppColors.blue],
           ).createShader(bounds),
           child: Text(
             'Flutter Developer',
@@ -280,22 +281,20 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
           decoration: BoxDecoration(
             gradient: isPrimary
-                ? const LinearGradient(
-                    colors: [Color(0xFF00FFA3), Color(0xFF00D9FF)],
-                  )
+                ? const LinearGradient(colors: [AppColors.cyan, AppColors.blue])
                 : null,
             color: isPrimary ? null : Color(0xFF1A1A1A),
             border: Border.all(
               color: isPrimary
                   ? Colors.transparent
-                  : Color(0xFF00D9FF).withValues(alpha: 0.3),
+                  : AppColors.cyan.withValues(alpha: 0.3),
               width: 2,
             ),
             borderRadius: BorderRadius.circular(12),
             boxShadow: isPrimary
                 ? [
                     BoxShadow(
-                      color: Color(0xFF00D9FF).withValues(alpha:0.3),
+                      color: Color(0xFF00D9FF).withValues(alpha: 0.3),
                       blurRadius: 20,
                       spreadRadius: 0,
                       offset: Offset(0, 8),
@@ -319,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Icon(
                 icon,
                 size: 18,
-                color: isPrimary ? const Color(0xFF0A0A0A) : Color(0xFF00D9FF),
+                color: isPrimary ? const Color(0xFF0A0A0A) : AppColors.cyan,
               ),
             ],
           ),
