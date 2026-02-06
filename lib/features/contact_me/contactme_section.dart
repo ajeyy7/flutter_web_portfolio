@@ -26,14 +26,14 @@ class ContactMeSection extends StatelessWidget {
   }
 
   Future<void> _launchLinkedIn() async {
-    final Uri url = Uri.parse('https://www.linkedin.com/in/ajaykrishna-vp');
+    final Uri url = Uri.parse('https://linkedin.com/in/ajeyyy');
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
   Future<void> _launchGitHub() async {
-    final Uri url = Uri.parse('https://github.com/Ajaykrishnak2001');
+    final Uri url = Uri.parse('https://github.com/ajeyy7');
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     }
