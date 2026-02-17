@@ -1,4 +1,5 @@
 import 'package:Portfolio_Ajay/core/constants/constants.dart';
+import 'package:Portfolio_Ajay/core/utils/responsive.dart';
 import 'package:Portfolio_Ajay/data/projects.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,8 @@ class ProjectsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 120 : 40,
-        vertical: 120,
+        horizontal: Responsive.padding(context, mobile: 20, tablet: 60, desktop: 120),
+        vertical: Responsive.padding(context, mobile: 60, tablet: 90, desktop: 120),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +21,7 @@ class ProjectsSection extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
+                width: Responsive.spacing(context, mobile: 30, desktop: 40),
                 height: 2,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -31,19 +32,19 @@ class ProjectsSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              SizedBox(width: Responsive.spacing(context, mobile: 8, desktop: 12)),
+              Text(
                 'PORTFOLIO',
                 style: TextStyle(
-                  fontSize: 13,
-                  letterSpacing: 3,
+                  fontSize: Responsive.fontSize(context, mobile: 11, desktop: 13),
+                  letterSpacing: Responsive.spacing(context, mobile: 2, desktop: 3),
                   color: AppColors.cyan,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: Responsive.spacing(context, mobile: 16, desktop: 24)),
 
           // Main Title
           ShaderMask(
@@ -53,10 +54,10 @@ class ProjectsSection extends StatelessWidget {
                 Colors.white.withValues(alpha:0.8),
               ],
             ).createShader(bounds),
-            child: const Text(
+            child: Text(
               'Featured Projects',
               style: TextStyle(
-                fontSize: 48,
+                fontSize: Responsive.fontSize(context, mobile: 28, tablet: 36, desktop: 48),
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
                 height: 1.2,
@@ -65,19 +66,19 @@ class ProjectsSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: Responsive.spacing(context, mobile: 12, desktop: 16)),
 
           // Subtitle
           Text(
             'End-to-end solutions across diverse domains with modern tech stacks',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: Responsive.fontSize(context, mobile: 14, desktop: 16),
               color: Colors.grey.shade400,
               height: 1.6,
             ),
           ),
 
-          const SizedBox(height: 80),
+          SizedBox(height: Responsive.spacing(context, mobile: 48, tablet: 64, desktop: 80)),
 
           // Projects Grid
           if (isDesktop)

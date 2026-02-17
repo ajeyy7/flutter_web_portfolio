@@ -1,3 +1,4 @@
+import 'package:Portfolio_Ajay/core/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -178,16 +179,31 @@ class _SplashScreenState extends State<SplashScreen>
                           return SlideTransition(
                             position: _letterSlideAnimations[index],
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: Responsive.spacing(
+                                  context,
+                                  mobile: 2,
+                                  desktop: 10,
+                                  tablet: 10,
+                                ),
                               ),
                               child: Text(
                                 _letters[index],
-                                style: const TextStyle(
-                                  fontSize: 140,
+                                style: TextStyle(
+                                  fontSize: Responsive.fontSize(
+                                    context,
+                                    mobile: 70,
+                                    desktop: 140,
+                                    tablet: 140,
+                                  ),
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
-                                  letterSpacing: 8,
+                                  letterSpacing: Responsive.spacing(
+                                    context,
+                                    mobile: 8,
+                                    desktop: 8,
+                                    tablet: 8,
+                                  ),
                                   fontFamily: 'Montserrat',
                                 ),
                               ),

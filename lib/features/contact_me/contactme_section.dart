@@ -1,4 +1,5 @@
 import 'package:Portfolio_Ajay/core/constants/constants.dart';
+import 'package:Portfolio_Ajay/core/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -55,8 +56,18 @@ class ContactMeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 120 : 40,
-        vertical: 120,
+        horizontal: Responsive.padding(
+          context,
+          mobile: 20,
+          tablet: 60,
+          desktop: 120,
+        ),
+        vertical: Responsive.padding(
+          context,
+          mobile: 60,
+          tablet: 90,
+          desktop: 120,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +76,7 @@ class ContactMeSection extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
+                width: Responsive.spacing(context, mobile: 30, desktop: 40),
                 height: 2,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -73,19 +84,31 @@ class ContactMeSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              SizedBox(
+                width: Responsive.spacing(context, mobile: 8, desktop: 12),
+              ),
+              Text(
                 'CONTACT',
                 style: TextStyle(
-                  fontSize: 13,
-                  letterSpacing: 3,
+                  fontSize: Responsive.fontSize(
+                    context,
+                    mobile: 11,
+                    desktop: 13,
+                  ),
+                  letterSpacing: Responsive.spacing(
+                    context,
+                    mobile: 2,
+                    desktop: 3,
+                  ),
                   color: AppColors.cyan,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 16, desktop: 24),
+          ),
 
           // Main Title
           ShaderMask(
@@ -95,7 +118,12 @@ class ContactMeSection extends StatelessWidget {
             child: Text(
               "Let's Work Together",
               style: TextStyle(
-                fontSize: isDesktop ? 48 : 36,
+                fontSize: Responsive.fontSize(
+                  context,
+                  mobile: 28,
+                  tablet: 36,
+                  desktop: 48,
+                ),
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
                 height: 1.2,
@@ -104,19 +132,28 @@ class ContactMeSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 12, desktop: 16),
+          ),
 
           // Subtitle
           Text(
             'Have an idea? Let\'s turn it into reality.',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: Responsive.fontSize(context, mobile: 14, desktop: 16),
               color: Colors.grey.shade400,
               height: 1.6,
             ),
           ),
 
-          SizedBox(height: isDesktop ? 80 : 60),
+          SizedBox(
+            height: Responsive.spacing(
+              context,
+              mobile: 20,
+              tablet: 64,
+              desktop: 80,
+            ),
+          ),
 
           // Contact Info Grid
           if (isDesktop)
@@ -128,6 +165,12 @@ class ContactMeSection extends StatelessWidget {
                   flex: 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: Responsive.spacing(
+                      context,
+                      mobile: 20,
+                      tablet: 32,
+                      desktop: 32,
+                    ),
                     children: [
                       _buildContactItem(
                         context: context,
@@ -140,7 +183,6 @@ class ContactMeSection extends StatelessWidget {
                           'Email',
                         ),
                       ),
-                      const SizedBox(height: 32),
                       _buildContactItem(
                         context: context,
                         label: 'Phone',
@@ -152,7 +194,6 @@ class ContactMeSection extends StatelessWidget {
                           'Phone',
                         ),
                       ),
-                      const SizedBox(height: 32),
                       _buildContactItem(
                         context: context,
                         label: 'Location',
@@ -168,7 +209,14 @@ class ContactMeSection extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(width: 80),
+                SizedBox(
+                  width: Responsive.spacing(
+                    context,
+                    mobile: 20,
+                    tablet: 64,
+                    desktop: 80,
+                  ),
+                ),
 
                 // Right Column - Social & CTA
                 Expanded(
@@ -186,14 +234,16 @@ class ContactMeSection extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
                       _buildSocialLink(
+                        context,
                         'GitHub',
-                        'github.com/Ajaykrishnak2001',
+                        'https://github.com/ajeyy7',
                         _launchGitHub,
                       ),
                       const SizedBox(height: 16),
                       _buildSocialLink(
+                        context,
                         'LinkedIn',
-                        'linkedin.com/in/ajaykrishna-vp',
+                        'www.linkedin.com/in/ajeyyy',
                         _launchLinkedIn,
                       ),
                     ],
@@ -216,7 +266,9 @@ class ContactMeSection extends StatelessWidget {
                     'Email',
                   ),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 20, desktop: 32),
+                ),
                 _buildContactItem(
                   context: context,
                   label: 'Phone',
@@ -225,7 +277,9 @@ class ContactMeSection extends StatelessWidget {
                   onCopy: () =>
                       _copyToClipboard(context, '+91 984 657 2149', 'Phone'),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 20, desktop: 32),
+                ),
                 _buildContactItem(
                   context: context,
                   label: 'Location',
@@ -234,39 +288,58 @@ class ContactMeSection extends StatelessWidget {
                   onCopy: () =>
                       _copyToClipboard(context, 'Kerala, India', 'Location'),
                 ),
-                const SizedBox(height: 60),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 35, desktop: 60),
+                ),
                 Text(
                   'SOCIAL',
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: Responsive.fontSize(
+                      context,
+                      mobile: 10,
+                      desktop: 11,
+                    ),
                     letterSpacing: 2,
                     color: Colors.grey.shade600,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 16, desktop: 24),
+                ),
                 _buildSocialLink(
+                  context,
                   'GitHub',
-                  'github.com/Ajaykrishnak2001',
+                  'https://github.com/ajeyy7',
                   _launchGitHub,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 12, desktop: 16),
+                ),
                 _buildSocialLink(
+                  context,
                   'LinkedIn',
-                  'linkedin.com/in/ajaykrishna-vp',
+                  'www.linkedin.com/in/ajeyyy',
                   _launchLinkedIn,
                 ),
               ],
             ),
 
-          const SizedBox(height: 100),
+          SizedBox(
+            height: Responsive.spacing(
+              context,
+              mobile: 60,
+              tablet: 80,
+              desktop: 100,
+            ),
+          ),
 
           // Footer
           Center(
             child: Column(
               children: [
                 Container(
-                  width: 60,
+                  width: Responsive.spacing(context, mobile: 40, desktop: 60),
                   height: 2,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -277,19 +350,35 @@ class ContactMeSection extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 16, desktop: 24),
+                ),
                 Text(
                   '© 2026 AjayKrishna. Built with Flutter 💙',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: Responsive.fontSize(
+                      context,
+                      mobile: 12,
+                      desktop: 14,
+                    ),
                     color: Color(0xFF666666),
                     letterSpacing: 0.5,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 8),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 6, desktop: 8),
+                ),
                 Text(
                   'All rights reserved.',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF444444)),
+                  style: TextStyle(
+                    fontSize: Responsive.fontSize(
+                      context,
+                      mobile: 11,
+                      desktop: 12,
+                    ),
+                    color: Color(0xFF444444),
+                  ),
                 ),
               ],
             ),
@@ -312,55 +401,74 @@ class ContactMeSection extends StatelessWidget {
         Text(
           label.toUpperCase(),
           style: TextStyle(
-            fontSize: 11,
+            fontSize: Responsive.fontSize(context, mobile: 10, desktop: 11),
             letterSpacing: 2,
             color: Colors.grey.shade600,
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: Responsive.spacing(context, mobile: 8, desktop: 12)),
         Row(
           children: [
             Expanded(
               child: Text(
                 value,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: Responsive.fontSize(
+                    context,
+                    mobile: 16,
+                    desktop: 20,
+                  ),
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.3,
                 ),
               ),
             ),
-            const SizedBox(width: 16),
-            if (onTap != null) _buildIconButton(Icons.arrow_outward, onTap),
-            const SizedBox(width: 8),
-            if (onTap != null) _buildIconButton(Icons.content_copy, onCopy),
+            SizedBox(
+              width: Responsive.spacing(context, mobile: 12, desktop: 16),
+            ),
+            if (onTap != null)
+              _buildIconButton(context, Icons.arrow_outward, onTap),
+            SizedBox(width: Responsive.spacing(context, mobile: 6, desktop: 8)),
+            if (onTap != null)
+              _buildIconButton(context, Icons.content_copy, onCopy),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildIconButton(IconData icon, VoidCallback onTap) {
+  Widget _buildIconButton(
+    BuildContext context,
+    IconData icon,
+    VoidCallback onTap,
+  ) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: EdgeInsets.all(
+            Responsive.padding(context, mobile: 6, desktop: 8),
+          ),
           decoration: BoxDecoration(
             color: Color(0xFF242424),
             borderRadius: BorderRadius.circular(6),
             border: Border.all(color: Color(0xFF2a2a2a), width: 1),
           ),
-          child: Icon(icon, size: 16, color: Color(0xFF00D9FF)),
+          child: Icon(
+            icon,
+            size: Responsive.fontSize(context, mobile: 14, desktop: 16),
+            color: Color(0xFF00D9FF),
+          ),
         ),
       ),
     );
   }
 
   Widget _buildSocialLink(
+    BuildContext context,
     String platform,
     String username,
     VoidCallback onTap,
@@ -370,7 +478,9 @@ class ContactMeSection extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: EdgeInsets.symmetric(
+            vertical: Responsive.padding(context, mobile: 10, desktop: 12),
+          ),
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(color: Color(0xFF2a2a2a), width: 1),
@@ -385,19 +495,34 @@ class ContactMeSection extends StatelessWidget {
                   Text(
                     platform,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: Responsive.fontSize(
+                        context,
+                        mobile: 14,
+                        desktop: 16,
+                      ),
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     username,
-                    style: TextStyle(fontSize: 13, color: Color(0xFF888888)),
+                    style: TextStyle(
+                      fontSize: Responsive.fontSize(
+                        context,
+                        mobile: 12,
+                        desktop: 13,
+                      ),
+                      color: Color(0xFF888888),
+                    ),
                   ),
                 ],
               ),
-              Icon(Icons.arrow_outward, size: 18, color: Color(0xFF00D9FF)),
+              Icon(
+                Icons.arrow_outward,
+                size: Responsive.fontSize(context, mobile: 16, desktop: 18),
+                color: Color(0xFF00D9FF),
+              ),
             ],
           ),
         ),

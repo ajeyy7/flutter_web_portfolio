@@ -1,4 +1,5 @@
 import 'package:Portfolio_Ajay/core/constants/constants.dart';
+import 'package:Portfolio_Ajay/core/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
 class AboutMeSection extends StatelessWidget {
@@ -9,8 +10,18 @@ class AboutMeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 120 : 40,
-        vertical: 120,
+        horizontal: Responsive.padding(
+          context,
+          mobile: 20,
+          tablet: 60,
+          desktop: 120,
+        ),
+        vertical: Responsive.padding(
+          context,
+          mobile: 60,
+          tablet: 90,
+          desktop: 120,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,7 +30,7 @@ class AboutMeSection extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
+                width: Responsive.spacing(context, mobile: 20, desktop: 40),
                 height: 2,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -27,19 +38,31 @@ class AboutMeSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              SizedBox(
+                width: Responsive.spacing(context, mobile: 8, desktop: 12),
+              ),
+              Text(
                 'ABOUT',
                 style: TextStyle(
-                  fontSize: 13,
-                  letterSpacing: 3,
+                  fontSize: Responsive.fontSize(
+                    context,
+                    mobile: 11,
+                    desktop: 13,
+                  ),
+                  letterSpacing: Responsive.spacing(
+                    context,
+                    mobile: 2,
+                    desktop: 3,
+                  ),
                   color: AppColors.cyan,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 16, desktop: 24),
+          ),
 
           // Main Title with gradient
           ShaderMask(
@@ -49,7 +72,12 @@ class AboutMeSection extends StatelessWidget {
             child: Text(
               'Who I Am & What I Do',
               style: TextStyle(
-                fontSize: isDesktop ? 48 : 36,
+                fontSize: Responsive.fontSize(
+                  context,
+                  mobile: 28,
+                  tablet: 36,
+                  desktop: 48,
+                ),
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
                 height: 1.2,
@@ -58,7 +86,14 @@ class AboutMeSection extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: isDesktop ? 60 : 40),
+          SizedBox(
+            height: Responsive.spacing(
+              context,
+              mobile: 32,
+              tablet: 48,
+              desktop: 60,
+            ),
+          ),
 
           // Main Content - Two Column Layout on Desktop
           if (isDesktop)
@@ -74,7 +109,9 @@ class AboutMeSection extends StatelessWidget {
             Column(
               children: [
                 _buildContentColumn(),
-                const SizedBox(height: 60),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 40, desktop: 60),
+                ),
                 _buildStatsAndHighlights(),
               ],
             ),
@@ -84,138 +121,186 @@ class AboutMeSection extends StatelessWidget {
   }
 
   Widget _buildContentColumn() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Main Description
-        const Text(
-          'I\'m a Flutter developer passionate about building elegant, scalable applications. My focus is on creating seamless user experiences while maintaining clean, maintainable code.',
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFFB0B0B0),
-            height: 1.8,
-            letterSpacing: 0.2,
+    return Builder(
+      builder: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Main Description
+          Text(
+            'I\'m a Flutter developer passionate about building elegant, scalable applications. My focus is on creating seamless user experiences while maintaining clean, maintainable code.',
+            style: TextStyle(
+              fontSize: Responsive.fontSize(context, mobile: 14, desktop: 16),
+              color: Color(0xFFB0B0B0),
+              height: 1.8,
+              letterSpacing: 0.2,
+            ),
           ),
-        ),
 
-        const SizedBox(height: 32),
-
-        // Process Section
-        Container(
-          padding: const EdgeInsets.all(28),
-          decoration: BoxDecoration(
-            color: Color(0xFF1A1A1A),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Color(0xFF2a2a2a), width: 2),
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 24, desktop: 32),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xFF00D9FF).withValues(alpha: 0.2),
-                          Color(0xFF00FFA3).withValues(alpha: 0.2),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(
-                      Icons.rocket_launch,
-                      color: Color(0xFF00D9FF),
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    'End-to-End Development',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      letterSpacing: 0.3,
-                    ),
-                  ),
-                ],
+
+          // Process Section
+          Container(
+            padding: EdgeInsets.all(
+              Responsive.padding(context, mobile: 20, desktop: 28),
+            ),
+            decoration: BoxDecoration(
+              color: Color(0xFF1A1A1A),
+              borderRadius: BorderRadius.circular(
+                Responsive.spacing(context, mobile: 12, desktop: 16),
               ),
-              const SizedBox(height: 20),
-              _buildProcessStep('Idea Validation', '01'),
-              _buildProcessStep('Design', '02'),
-              _buildProcessStep('Development', '03'),
-              _buildProcessStep('Deployment', '04'),
-            ],
+              border: Border.all(color: Color(0xFF2a2a2a), width: 2),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(
+                        Responsive.padding(context, mobile: 6, desktop: 8),
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF00D9FF).withValues(alpha: 0.2),
+                            Color(0xFF00FFA3).withValues(alpha: 0.2),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        Icons.rocket_launch,
+                        color: Color(0xFF00D9FF),
+                        size: Responsive.fontSize(
+                          context,
+                          mobile: 16,
+                          desktop: 20,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Responsive.spacing(
+                        context,
+                        mobile: 8,
+                        desktop: 12,
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        'End-to-End Development',
+                        style: TextStyle(
+                          fontSize: Responsive.fontSize(
+                            context,
+                            mobile: 14,
+                            desktop: 16,
+                          ),
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          letterSpacing: 0.3,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 16, desktop: 20),
+                ),
+                _buildProcessStep(context, 'Idea Validation', '01'),
+                _buildProcessStep(context, 'Design', '02'),
+                _buildProcessStep(context, 'Development', '03'),
+                _buildProcessStep(context, 'Deployment', '04'),
+              ],
+            ),
           ),
-        ),
 
-        const SizedBox(height: 32),
-      ],
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 24, desktop: 32),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildStatsAndHighlights() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Specializations
-        Container(
-          padding: const EdgeInsets.all(28),
-          decoration: BoxDecoration(
-            color: Color(0xFF1A1A1A),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Color(0xFF2a2a2a), width: 2),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'SPECIALIZATIONS',
-                style: TextStyle(
-                  fontSize: 11,
-                  letterSpacing: 2,
-                  color: Colors.grey.shade600,
-                  fontWeight: FontWeight.w700,
+    return Builder(
+      builder: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Specializations
+          Container(
+            padding: EdgeInsets.all(
+              Responsive.padding(context, mobile: 20, desktop: 28),
+            ),
+            decoration: BoxDecoration(
+              color: Color(0xFF1A1A1A),
+              borderRadius: BorderRadius.circular(
+                Responsive.spacing(context, mobile: 16, desktop: 20),
+              ),
+              border: Border.all(color: Color(0xFF2a2a2a), width: 2),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'SPECIALIZATIONS',
+                  style: TextStyle(
+                    fontSize: Responsive.fontSize(
+                      context,
+                      mobile: 10,
+                      desktop: 11,
+                    ),
+                    letterSpacing: 2,
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              _buildSpecialization(
-                Icons.code,
-                'Clean Architecture',
-                'Scalable & maintainable code',
-              ),
-              _buildSpecialization(
-                Icons.layers,
-                'State Management',
-                'Provider, Riverpod, GetX, BLoC',
-              ),
-              _buildSpecialization(
-                Icons.api,
-                'API Integration',
-                'RESTful & real-time data',
-              ),
-              _buildSpecialization(
-                Icons.devices,
-                'Cross-Platform',
-                'Mobile, Web & Desktop',
-              ),
-            ],
+                SizedBox(
+                  height: Responsive.spacing(context, mobile: 16, desktop: 20),
+                ),
+                _buildSpecialization(
+                  context,
+                  Icons.code,
+                  'Clean Architecture',
+                  'Scalable & maintainable code',
+                ),
+                _buildSpecialization(
+                  context,
+                  Icons.layers,
+                  'State Management',
+                  'Provider, Riverpod, GetX, BLoC',
+                ),
+                _buildSpecialization(
+                  context,
+                  Icons.api,
+                  'API Integration',
+                  'RESTful & real-time data',
+                ),
+                _buildSpecialization(
+                  context,
+                  Icons.devices,
+                  'Cross-Platform',
+                  'Mobile, Web & Desktop',
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildProcessStep(String title, String number) {
+  Widget _buildProcessStep(BuildContext context, String title, String number) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(
+        bottom: Responsive.spacing(context, mobile: 12, desktop: 16),
+      ),
       child: Row(
         children: [
           Container(
-            width: 32,
-            height: 32,
+            width: Responsive.spacing(context, mobile: 28, desktop: 32),
+            height: Responsive.spacing(context, mobile: 28, desktop: 32),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -233,43 +318,65 @@ class AboutMeSection extends StatelessWidget {
               child: Text(
                 number,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: Responsive.fontSize(
+                    context,
+                    mobile: 11,
+                    desktop: 12,
+                  ),
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF00D9FF),
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 16),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFFB0B0B0),
-              fontWeight: FontWeight.w600,
+          SizedBox(width: Responsive.spacing(context, mobile: 12, desktop: 16)),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: Responsive.fontSize(context, mobile: 13, desktop: 14),
+                color: Color(0xFFB0B0B0),
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
-          const Spacer(),
-          Icon(Icons.arrow_forward, size: 16, color: Colors.grey.shade700),
+          Icon(
+            Icons.arrow_forward,
+            size: Responsive.fontSize(context, mobile: 14, desktop: 16),
+            color: Colors.grey.shade700,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSpecialization(IconData icon, String title, String description) {
+  Widget _buildSpecialization(
+    BuildContext context,
+    IconData icon,
+    String title,
+    String description,
+  ) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.only(
+        bottom: Responsive.spacing(context, mobile: 16, desktop: 20),
+      ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(
+              Responsive.padding(context, mobile: 8, desktop: 10),
+            ),
             decoration: BoxDecoration(
               color: Color(0xFF242424),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(icon, color: Color(0xFF00D9FF), size: 20),
+            child: Icon(
+              icon,
+              color: Color(0xFF00D9FF),
+              size: Responsive.fontSize(context, mobile: 18, desktop: 20),
+            ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: Responsive.spacing(context, mobile: 12, desktop: 16)),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,15 +384,26 @@ class AboutMeSection extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: Responsive.fontSize(
+                      context,
+                      mobile: 13,
+                      desktop: 14,
+                    ),
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2),
                 Text(
                   description,
-                  style: TextStyle(fontSize: 12, color: Color(0xFF888888)),
+                  style: TextStyle(
+                    fontSize: Responsive.fontSize(
+                      context,
+                      mobile: 11,
+                      desktop: 12,
+                    ),
+                    color: Color(0xFF888888),
+                  ),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:Portfolio_Ajay/core/constants/constants.dart';
+import 'package:Portfolio_Ajay/core/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -10,8 +11,8 @@ class SkillsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 120 : 40,
-        vertical: 120,
+        horizontal: Responsive.padding(context, mobile: 20, tablet: 60, desktop: 120),
+        vertical: Responsive.padding(context, mobile: 60, tablet: 90, desktop: 120),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +21,7 @@ class SkillsSection extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
+                width: Responsive.spacing(context, mobile: 30, desktop: 40),
                 height: 2,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -28,29 +29,29 @@ class SkillsSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              SizedBox(width: Responsive.spacing(context, mobile: 8, desktop: 12)),
+              Text(
                 'EXPERTISE',
                 style: TextStyle(
-                  fontSize: 13,
-                  letterSpacing: 3,
+                  fontSize: Responsive.fontSize(context, mobile: 11, desktop: 13),
+                  letterSpacing: Responsive.spacing(context, mobile: 2, desktop: 3),
                   color: AppColors.cyan,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: Responsive.spacing(context, mobile: 16, desktop: 24)),
 
           // Main Title with gradient
           ShaderMask(
             shaderCallback: (bounds) => LinearGradient(
               colors: [Colors.white, Colors.white.withValues(alpha:0.8)],
             ).createShader(bounds),
-            child: const Text(
+            child: Text(
               'Skills & Technologies',
               style: TextStyle(
-                fontSize: 48,
+                fontSize: Responsive.fontSize(context, mobile: 28, tablet: 36, desktop: 48),
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
                 height: 1.2,
@@ -59,19 +60,19 @@ class SkillsSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: Responsive.spacing(context, mobile: 12, desktop: 16)),
 
           // Subtitle
           Text(
             'Tools and technologies I work with to bring ideas to life',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: Responsive.fontSize(context, mobile: 14, desktop: 16),
               color: Colors.grey.shade400,
               height: 1.6,
             ),
           ),
 
-          const SizedBox(height: 80),
+          SizedBox(height: Responsive.spacing(context, mobile: 48, tablet: 64, desktop: 80)),
 
           // Skills Grid
           _buildSkillsGrid(),
@@ -81,34 +82,38 @@ class SkillsSection extends StatelessWidget {
   }
 
   Widget _buildSkillsGrid() {
-    final skills = [
-      {'svg': dartSvg, 'name': 'Dart', 'color': Color(0xFF0175C2)},
-      {'svg': cSvg, 'name': 'C', 'color': Color(0xFFA8B9CC)},
-      {'svg': cPlusPlusSvg, 'name': 'C++', 'color': Color(0xFF00599C)},
-      {'svg': firebaseSvg, 'name': 'Firebase', 'color': Color(0xFFFFCA28)},
-      {'svg': linuxSvg, 'name': 'Linux', 'color': Color(0xFFFCC624)},
-      {'svg': pythonSvg, 'name': 'Python', 'color': Color(0xFF3776AB)},
-      {'svg': gazeboSvg, 'name': 'Gazebo', 'color': Color(0xFFFF6B35)},
-      {'svg': flutterSvg, 'name': 'Flutter', 'color': Color(0xFF02569B)},
-      {'svg': gitSvg, 'name': 'Git', 'color': Color(0xFFF05032)},
-      {'svg': figmaSvg, 'name': 'Figma', 'color': Color(0xFFF24E1E)},
-      {'svg': nodeSvg, 'name': 'Node.js', 'color': Color(0xFF339933)},
-      {'svg': postmanSvg, 'name': 'Postman', 'color': Color(0xFFFF6C37)},
-      {'svg': javaScriptSvg, 'name': 'JavaScript', 'color': Color(0xFFF7DF1E)},
-    ];
+    return Builder(
+      builder: (context) {
+        final skills = [
+          {'svg': dartSvg, 'name': 'Dart', 'color': Color(0xFF0175C2)},
+          {'svg': cSvg, 'name': 'C', 'color': Color(0xFFA8B9CC)},
+          {'svg': cPlusPlusSvg, 'name': 'C++', 'color': Color(0xFF00599C)},
+          {'svg': firebaseSvg, 'name': 'Firebase', 'color': Color(0xFFFFCA28)},
+          {'svg': linuxSvg, 'name': 'Linux', 'color': Color(0xFFFCC624)},
+          {'svg': pythonSvg, 'name': 'Python', 'color': Color(0xFF3776AB)},
+          {'svg': gazeboSvg, 'name': 'Gazebo', 'color': Color(0xFFFF6B35)},
+          {'svg': flutterSvg, 'name': 'Flutter', 'color': Color(0xFF02569B)},
+          {'svg': gitSvg, 'name': 'Git', 'color': Color(0xFFF05032)},
+          {'svg': figmaSvg, 'name': 'Figma', 'color': Color(0xFFF24E1E)},
+          {'svg': nodeSvg, 'name': 'Node.js', 'color': Color(0xFF339933)},
+          {'svg': postmanSvg, 'name': 'Postman', 'color': Color(0xFFFF6C37)},
+          {'svg': javaScriptSvg, 'name': 'JavaScript', 'color': Color(0xFFF7DF1E)},
+        ];
 
-    return Wrap(
-      spacing: isDesktop ? 24 : 16,
-      runSpacing: isDesktop ? 24 : 16,
-      children: List.generate(
-        skills.length,
-        (index) => SkillIcon(
-          svg: skills[index]['svg'] as String,
-          name: skills[index]['name'] as String,
-          accentColor: skills[index]['color'] as Color,
-          isDesktop: isDesktop,
-        ),
-      ),
+        return Wrap(
+          spacing: Responsive.spacing(context, mobile: 12, tablet: 16, desktop: 24),
+          runSpacing: Responsive.spacing(context, mobile: 12, tablet: 16, desktop: 24),
+          children: List.generate(
+            skills.length,
+            (index) => SkillIcon(
+              svg: skills[index]['svg'] as String,
+              name: skills[index]['name'] as String,
+              accentColor: skills[index]['color'] as Color,
+              isDesktop: isDesktop,
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -136,7 +141,7 @@ class _SkillIconState extends State<SkillIcon> {
 
   @override
   Widget build(BuildContext context) {
-    final size = widget.isDesktop ? 110.0 : 85.0;
+    final size = Responsive.spacing(context, mobile: 75, tablet: 90, desktop: 110);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -196,7 +201,7 @@ class _SkillIconState extends State<SkillIcon> {
             Text(
               widget.name,
               style: TextStyle(
-                fontSize: widget.isDesktop ? 12 : 10,
+                fontSize: Responsive.fontSize(context, mobile: 10, tablet: 11, desktop: 12),
                 fontWeight: _isHovered
                     ? FontWeight.w700
                     : FontWeight.w600,

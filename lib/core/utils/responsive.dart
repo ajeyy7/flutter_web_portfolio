@@ -22,6 +22,39 @@ class Responsive extends StatelessWidget {
   static bool isDesktop(BuildContext context) =>
       MediaQuery.of(context).size.width >= 1200;
 
+  // Responsive font sizes
+  static double fontSize(BuildContext context, {
+    required double mobile,
+    double? tablet,
+    required double desktop,
+  }) {
+    if (isDesktop(context)) return desktop;
+    if (isTablet(context)) return tablet ?? mobile;
+    return mobile;
+  }
+
+  // Responsive padding
+  static double padding(BuildContext context, {
+    required double mobile,
+    double? tablet,
+    required double desktop,
+  }) {
+    if (isDesktop(context)) return desktop;
+    if (isTablet(context)) return tablet ?? mobile;
+    return mobile;
+  }
+
+  // Responsive spacing
+  static double spacing(BuildContext context, {
+    required double mobile,
+    double? tablet,
+    required double desktop,
+  }) {
+    if (isDesktop(context)) return desktop;
+    if (isTablet(context)) return tablet ?? mobile;
+    return mobile;
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(

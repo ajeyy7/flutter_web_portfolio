@@ -1,4 +1,5 @@
 import 'package:Portfolio_Ajay/core/constants/constants.dart';
+import 'package:Portfolio_Ajay/core/utils/responsive.dart';
 import 'package:Portfolio_Ajay/data/experince.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,8 @@ class ExperienceSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 120 : 40,
-        vertical: 120,
+        horizontal: Responsive.padding(context, mobile: 20, tablet: 60, desktop: 120),
+        vertical: Responsive.padding(context, mobile: 60, tablet: 90, desktop: 120),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +21,7 @@ class ExperienceSection extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 40,
+                width: Responsive.spacing(context, mobile: 30, desktop: 40),
                 height: 2,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -28,29 +29,29 @@ class ExperienceSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
-              const Text(
+              SizedBox(width: Responsive.spacing(context, mobile: 8, desktop: 12)),
+              Text(
                 'JOURNEY',
                 style: TextStyle(
-                  fontSize: 13,
-                  letterSpacing: 3,
+                  fontSize: Responsive.fontSize(context, mobile: 11, desktop: 13),
+                  letterSpacing: Responsive.spacing(context, mobile: 2, desktop: 3),
                   color: AppColors.cyan,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: Responsive.spacing(context, mobile: 16, desktop: 24)),
 
           // Main Title
           ShaderMask(
             shaderCallback: (bounds) => LinearGradient(
               colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
             ).createShader(bounds),
-            child: const Text(
+            child: Text(
               'Professional Experience',
               style: TextStyle(
-                fontSize: 48,
+                fontSize: Responsive.fontSize(context, mobile: 28, tablet: 36, desktop: 48),
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
                 height: 1.2,
@@ -59,19 +60,19 @@ class ExperienceSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: Responsive.spacing(context, mobile: 12, desktop: 16)),
 
           // Subtitle
           Text(
             'My journey building scalable applications and real-time systems',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: Responsive.fontSize(context, mobile: 14, desktop: 16),
               color: Colors.grey.shade400,
               height: 1.6,
             ),
           ),
 
-          const SizedBox(height: 80),
+          SizedBox(height: Responsive.spacing(context, mobile: 48, tablet: 64, desktop: 80)),
 
           // Experience Timeline
           ...experiences.asMap().entries.map((entry) {
@@ -144,7 +145,9 @@ class _ExperienceCardState extends State<ExperienceCard> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: Container(
-        margin: EdgeInsets.only(bottom: widget.isLast ? 0 : 40),
+        margin: EdgeInsets.only(
+          bottom: widget.isLast ? 0 : Responsive.spacing(context, mobile: 32, desktop: 40),
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -153,8 +156,8 @@ class _ExperienceCardState extends State<ExperienceCard> {
               children: [
                 // Dot
                 Container(
-                  width: 16,
-                  height: 16,
+                  width: Responsive.spacing(context, mobile: 14, desktop: 16),
+                  height: Responsive.spacing(context, mobile: 14, desktop: 16),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -185,8 +188,10 @@ class _ExperienceCardState extends State<ExperienceCard> {
                 if (!widget.isLast)
                   Container(
                     width: 2,
-                    height: 180,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    height: Responsive.spacing(context, mobile: 140, desktop: 180),
+                    margin: EdgeInsets.symmetric(
+                      vertical: Responsive.spacing(context, mobile: 6, desktop: 8),
+                    ),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -203,12 +208,12 @@ class _ExperienceCardState extends State<ExperienceCard> {
               ],
             ),
 
-            const SizedBox(width: 32),
+            SizedBox(width: Responsive.spacing(context, mobile: 20, desktop: 32)),
 
             // Content Card
             Expanded(
               child: Container(
-                padding: const EdgeInsets.all(32),
+                padding: EdgeInsets.all(Responsive.padding(context, mobile: 20, tablet: 28, desktop: 32)),
                 decoration: BoxDecoration(
                   gradient: _isHovered
                       ? LinearGradient(
@@ -254,19 +259,19 @@ class _ExperienceCardState extends State<ExperienceCard> {
                               Text(
                                 widget.company,
                                 style: TextStyle(
-                                  fontSize: widget.isDesktop ? 28 : 24,
+                                  fontSize: Responsive.fontSize(context, mobile: 20, tablet: 24, desktop: 28),
                                   fontWeight: FontWeight.w800,
                                   color: Colors.white,
                                   letterSpacing: -0.5,
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: Responsive.spacing(context, mobile: 6, desktop: 8)),
 
                               // Role
                               Text(
                                 widget.role,
                                 style: TextStyle(
-                                  fontSize: widget.isDesktop ? 18 : 16,
+                                  fontSize: Responsive.fontSize(context, mobile: 14, tablet: 16, desktop: 18),
                                   color: _accentColor,
                                   fontWeight: FontWeight.w600,
                                   letterSpacing: 0.3,
@@ -275,11 +280,11 @@ class _ExperienceCardState extends State<ExperienceCard> {
 
                               // Period badge - only show in mobile
                               if (!widget.isDesktop) ...[
-                                const SizedBox(height: 12),
+                                SizedBox(height: Responsive.spacing(context, mobile: 10, desktop: 12)),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 2,
+                                    horizontal: Responsive.padding(context, mobile: 8, desktop: 8),
+                                    vertical: Responsive.padding(context, mobile: 4, desktop: 2),
                                   ),
                                   decoration: BoxDecoration(
                                     color: _accentColor.withValues(
@@ -296,29 +301,29 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                   child: Text(
                                     widget.period,
                                     style: TextStyle(
-                                      fontSize: 8,
+                                      fontSize: Responsive.fontSize(context, mobile: 10, desktop: 8),
                                       color: _accentColor,
                                       fontWeight: FontWeight.w300,
                                       letterSpacing: 0.5,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 12),
+                                SizedBox(height: Responsive.spacing(context, mobile: 10, desktop: 12)),
                               ],
 
                               // Location & Type
                               Row(
-                                spacing: widget.isDesktop ? 12 : 4,
+                                spacing: Responsive.spacing(context, mobile: 6, tablet: 8, desktop: 12),
                                 children: [
                                   Icon(
                                     Icons.location_on_outlined,
-                                    size: widget.isDesktop ? 16 : 10,
+                                    size: Responsive.fontSize(context, mobile: 12, tablet: 14, desktop: 16),
                                     color: Colors.grey.shade600,
                                   ),
                                   Text(
                                     widget.location,
                                     style: TextStyle(
-                                      fontSize: widget.isDesktop ? 14 : 10,
+                                      fontSize: Responsive.fontSize(context, mobile: 12, tablet: 13, desktop: 14),
                                       color: Colors.grey.shade500,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -334,7 +339,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                   Text(
                                     widget.type,
                                     style: TextStyle(
-                                      fontSize: widget.isDesktop ? 14 : 10,
+                                      fontSize: Responsive.fontSize(context, mobile: 12, tablet: 13, desktop: 14),
                                       color: Colors.grey.shade500,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -372,20 +377,20 @@ class _ExperienceCardState extends State<ExperienceCard> {
                       ],
                     ),
 
-                    SizedBox(height: widget.isDesktop ? 24 : 16),
+                    SizedBox(height: Responsive.spacing(context, mobile: 16, tablet: 20, desktop: 24)),
 
                     // Description
                     Text(
                       widget.description,
                       style: TextStyle(
-                        fontSize: widget.isDesktop ? 15 : 14,
+                        fontSize: Responsive.fontSize(context, mobile: 13, tablet: 14, desktop: 15),
                         color: Color(0xFFB0B0B0),
                         height: 1.7,
                         letterSpacing: 0.2,
                       ),
                     ),
 
-                    const SizedBox(height: 24),
+                    SizedBox(height: Responsive.spacing(context, mobile: 20, desktop: 24)),
 
                     // Expandable Key Highlights
                     GestureDetector(
@@ -399,16 +404,16 @@ class _ExperienceCardState extends State<ExperienceCard> {
                           Text(
                             'KEY HIGHLIGHTS',
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: Responsive.fontSize(context, mobile: 10, desktop: 11),
                               letterSpacing: 2,
                               color: _accentColor.withValues(alpha: 0.8),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: Responsive.spacing(context, mobile: 6, desktop: 8)),
                           Icon(
                             _isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                            size: 20,
+                            size: Responsive.fontSize(context, mobile: 18, desktop: 20),
                             color: _accentColor,
                           ),
                         ],
@@ -416,22 +421,22 @@ class _ExperienceCardState extends State<ExperienceCard> {
                     ),
 
                     if (_isExpanded) ...[
-                      const SizedBox(height: 16),
+                      SizedBox(height: Responsive.spacing(context, mobile: 12, desktop: 16)),
                       ...widget.highlights.map((highlight) {
                         return Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 12,
+                          padding: EdgeInsets.only(
+                            bottom: Responsive.spacing(context, mobile: 10, desktop: 12),
                           ),
                           child: Row(
                             crossAxisAlignment:
                                 CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(
-                                  top: 6,
+                                margin: EdgeInsets.only(
+                                  top: Responsive.spacing(context, mobile: 5, desktop: 6),
                                 ),
-                                width: 6,
-                                height: 6,
+                                width: Responsive.spacing(context, mobile: 5, desktop: 6),
+                                height: Responsive.spacing(context, mobile: 5, desktop: 6),
                                 decoration: BoxDecoration(
                                   color: _accentColor.withValues(
                                     alpha: 0.6,
@@ -439,12 +444,12 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                   shape: BoxShape.circle,
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: Responsive.spacing(context, mobile: 10, desktop: 12)),
                               Expanded(
                                 child: Text(
                                   highlight,
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: Responsive.fontSize(context, mobile: 13, desktop: 14),
                                     color: Color(0xFF999999),
                                     height: 1.6,
                                   ),

@@ -1,4 +1,5 @@
 import 'package:Portfolio_Ajay/core/constants/constants.dart';
+import 'package:Portfolio_Ajay/core/utils/responsive.dart';
 import 'package:Portfolio_Ajay/features/about_me/aboutme_section.dart';
 import 'package:Portfolio_Ajay/features/contact_me/contactme_section.dart';
 import 'package:Portfolio_Ajay/features/experience/experince_section.dart';
@@ -134,7 +135,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHeroSection(Size size, bool isDesktop) {
     return Container(
       height: size.height,
-      padding: EdgeInsets.symmetric(horizontal: isDesktop ? 120 : 40),
+      padding: EdgeInsets.symmetric(
+        horizontal: Responsive.padding(
+          context,
+          mobile: 20,
+          tablet: 60,
+          desktop: 120,
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,112 +170,145 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHeroContent(bool isDesktop) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Greeting
-        Row(
-          children: [
-            Container(
-              width: 40,
-              height: 2,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.cyan, AppColors.blue],
+    return Builder(
+      builder: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Greeting
+          Row(
+            children: [
+              Container(
+                width: Responsive.spacing(context, mobile: 30, desktop: 40),
+                height: 2,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [AppColors.cyan, AppColors.blue],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 12),
-            const Text(
-              "HI, I'M",
+              SizedBox(
+                width: Responsive.spacing(context, mobile: 8, desktop: 12),
+              ),
+              Text(
+                "HI, I'M",
+                style: TextStyle(
+                  fontSize: Responsive.fontSize(
+                    context,
+                    mobile: 11,
+                    desktop: 13,
+                  ),
+                  letterSpacing: Responsive.spacing(
+                    context,
+                    mobile: 2,
+                    desktop: 3,
+                  ),
+                  color: AppColors.cyan,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 16, desktop: 24),
+          ),
+
+          // Name
+          ShaderMask(
+            shaderCallback: (bounds) => LinearGradient(
+              colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
+            ).createShader(bounds),
+            child: Text(
+              'Ajaykrishna',
               style: TextStyle(
-                fontSize: 13,
-                letterSpacing: 3,
-                color: AppColors.cyan,
-                fontWeight: FontWeight.w700,
+                fontSize: Responsive.fontSize(
+                  context,
+                  mobile: 42,
+                  tablet: 56,
+                  desktop: 72,
+                ),
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
+                height: 1.1,
+                letterSpacing: -2,
               ),
             ),
-          ],
-        ),
-        const SizedBox(height: 24),
+          ),
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 12, desktop: 12),
+          ),
 
-        // Name
-        ShaderMask(
-          shaderCallback: (bounds) => LinearGradient(
-            colors: [Colors.white, Colors.white.withValues(alpha: 0.8)],
-          ).createShader(bounds),
-          child: Text(
-            'Ajaykrishna',
-            style: TextStyle(
-              fontSize: isDesktop ? 72 : 56,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-              height: 1.1,
-              letterSpacing: -2,
+          // Role
+          ShaderMask(
+            shaderCallback: (bounds) => const LinearGradient(
+              colors: [AppColors.cyan, AppColors.blue],
+            ).createShader(bounds),
+            child: Text(
+              'Flutter Developer',
+              style: TextStyle(
+                fontSize: Responsive.fontSize(
+                  context,
+                  mobile: 28,
+                  tablet: 36,
+                  desktop: 48,
+                ),
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
+                height: 1.1,
+                letterSpacing: -1.5,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 12),
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 24, desktop: 32),
+          ),
 
-        // Role
-        ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [AppColors.cyan, AppColors.blue],
-          ).createShader(bounds),
-          child: Text(
-            'Flutter Developer',
-            style: TextStyle(
-              fontSize: isDesktop ? 48 : 36,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-              height: 1.1,
-              letterSpacing: -1.5,
+          // Tagline
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: isDesktop ? 500 : double.infinity,
+            ),
+            child: Text(
+              'Transforming ideas into production-ready apps across Mobile, Web & Desktop platforms.',
+              style: TextStyle(
+                fontSize: Responsive.fontSize(context, mobile: 15, desktop: 18),
+                color: Color(0xFFB0B0B0),
+                height: 1.7,
+                letterSpacing: 0.2,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 32),
-
-        // Tagline
-        Container(
-          constraints: BoxConstraints(
-            maxWidth: isDesktop ? 500 : double.infinity,
+          SizedBox(
+            height: Responsive.spacing(context, mobile: 32, desktop: 48),
           ),
-          child: Text(
-            'Transforming ideas into production-ready apps across Mobile, Web & Desktop platforms.',
-            style: TextStyle(
-              fontSize: 18,
-              color: Color(0xFFB0B0B0),
-              height: 1.7,
-              letterSpacing: 0.2,
-            ),
-          ),
-        ),
-        const SizedBox(height: 48),
 
-        // CTA Buttons
-        Wrap(
-          spacing: 16,
-          runSpacing: 16,
-          children: [
-            _buildButton(
-              'View Projects',
-              isPrimary: true,
-              icon: Icons.arrow_forward,
-              onTap: () => _scrollToSection(_projectsKey),
-            ),
-            _buildButton(
-              'Get in Touch',
-              isPrimary: false,
-              icon: Icons.mail_outline,
-              onTap: () => _scrollToSection(_contactKey),
-            ),
-          ],
-        ),
-      ],
+          // CTA Buttons
+          Wrap(
+            spacing: Responsive.spacing(context, mobile: 12, desktop: 16),
+            runSpacing: Responsive.spacing(context, mobile: 12, desktop: 16),
+            children: [
+              _buildButton(
+                context,
+                'View Projects',
+                isPrimary: true,
+                icon: Icons.arrow_forward,
+                onTap: () => _scrollToSection(_projectsKey),
+              ),
+              _buildButton(
+                context,
+                'Get in Touch',
+                isPrimary: false,
+                icon: Icons.mail_outline,
+                onTap: () => _scrollToSection(_contactKey),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildButton(
+    BuildContext context,
     String text, {
     required bool isPrimary,
     required IconData icon,
@@ -278,7 +319,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+          padding: EdgeInsets.symmetric(
+            horizontal: Responsive.padding(context, mobile: 20, desktop: 28),
+            vertical: Responsive.padding(context, mobile: 12, desktop: 16),
+          ),
           decoration: BoxDecoration(
             gradient: isPrimary
                 ? const LinearGradient(colors: [AppColors.cyan, AppColors.blue])
@@ -290,7 +334,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   : AppColors.cyan.withValues(alpha: 0.3),
               width: 2,
             ),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(
+              Responsive.spacing(context, mobile: 10, desktop: 12),
+            ),
             boxShadow: isPrimary
                 ? [
                     BoxShadow(
@@ -309,15 +355,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 text,
                 style: TextStyle(
                   color: isPrimary ? const Color(0xFF0A0A0A) : Colors.white,
-                  fontSize: 15,
+                  fontSize: Responsive.fontSize(
+                    context,
+                    mobile: 13,
+                    desktop: 15,
+                  ),
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.5,
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(
+                width: Responsive.spacing(context, mobile: 8, desktop: 12),
+              ),
               Icon(
                 icon,
-                size: 18,
+                size: Responsive.fontSize(context, mobile: 16, desktop: 18),
                 color: isPrimary ? const Color(0xFF0A0A0A) : AppColors.cyan,
               ),
             ],
